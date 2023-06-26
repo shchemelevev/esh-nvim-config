@@ -29,13 +29,24 @@ local plugins = {
   {'RishabhRD/lspactions'},
   {
       'crusj/bookmarks.nvim',
+      lazy=false,
       keys = {
           { "<tab><tab>", mode = { "n" } },
       },
       branch = 'main',
       dependencies = { 'nvim-web-devicons' },
       config = function()
-          require("bookmarks").setup()
+          require("bookmarks").setup({
+             keymap = {
+                toggle = "<tab><tab>", -- toggle bookmarks
+                add = "mm", -- add bookmarks
+                jump = "<CR>", -- jump from bookmarks
+                delete = "dd", -- delete bookmarks
+                order = "<space><space>", -- order bookmarks by frequency or updated_time
+                delete_on_virt = "\\dd", -- delete bookmark at virt text line
+                show_desc = "\\sd" -- show bookmark desc
+            }
+          })
           require("telescope").load_extension("bookmarks")
       end
   },
