@@ -18,9 +18,6 @@ local plugins = {
   --   end
   -- },
   {
-    'shaunsingh/solarized.nvim'
-  },
-  {
     "sindrets/diffview.nvim",
     -- lazy = false,
     cmd="DiffviewOpen"

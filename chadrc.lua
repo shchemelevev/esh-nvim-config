@@ -9,7 +9,7 @@
    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
  end
 
- M.ui = {theme = 'everforest_light'}
+ M.ui = {theme = 'solorized_light'}
  M.plugins = "custom.plugins"
  vim.wo.relativenumber = true
 -- map('n', ':', ';') -- change vertical to horizontal
