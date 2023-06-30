@@ -1,10 +1,10 @@
 local config = require("plugins.configs.lspconfig")
+local util = require 'lspconfig/util'
 
 local on_attach = config.on_attach
 local capabilities = config.capabilities
 
 local lspconfig = require("lspconfig")
-
 
 lspconfig.pyright.setup({
   on_attach = on_attach,
@@ -12,6 +12,7 @@ lspconfig.pyright.setup({
   filetypes = {"python"},
 })
 
+-- root_dir = nvim_lsp.util.root_pattern('.git', "pyrightconfig.json", ".tox");
 
 -- lspconfig.jedi_language_server.setup{}
 -- lspconfig.pylsp.setup{}

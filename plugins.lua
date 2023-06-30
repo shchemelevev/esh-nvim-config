@@ -1,3 +1,26 @@
+local function restore_tabs()
+
+    local buf_right = vim.cmd("echo bufnr('%')")
+          local api = require('nvim-tree.api')
+          local view = require('nvim-tree.view')
+
+          if view.is_visible() then
+            api.tree.close()
+          end
+    vim.t.bufs = vim.api.nvim_list_bufs()
+            api.tree.open()
+            vim.cmd("buffer " .. buf_right)
+end
+
+local function close_neotree()
+   local api = require('nvim-tree.api')
+   local view = require('nvim-tree.view')
+
+   if view.is_visible() then
+     api.tree.close()
+   end
+end
+
 local plugins = {
   -- {
   --   "rcarriga/nvim-dap-ui",
@@ -17,6 +40,80 @@ local plugins = {
   --     end
   --   end
   -- },
+  -- { 'echasnovski/mini.nvim',
+  --   version = false ,
+  --   lazy = false,
+  --   init = function()
+  --     require('mini.sessions').setup({
+  --       -- Whether to read latest session if Neovim opened without file arguments
+  --       autoread = false,
+  --       -- Whether to write current session before quitting Neovim
+  --       autowrite = false,
+  --       -- Directory where global sessions are stored (use `''` to disable)
+  --       directory =  '~/.vim/sessions', --<"session" subdir of user data directory from |stdpath()|>,
+  --       -- File for local session (use `''` to disable)
+  --       file = '' -- 'Session.vim',
+  --     })
+  --     local header_art =
+  --     [[
+  --      ╭╮╭┬─╮╭─╮┬  ┬┬╭┬╮
+  --      │││├┤ │ │╰┐┌╯││││
+  --      ╯╰╯╰─╯╰─╯ ╰╯ ┴┴ ┴
+  --     ]]
+  --     local starter = require('mini.starter')
+  --     starter.setup({
+  --       -- evaluate_single = true,
+  --       items = {
+  --         starter.sections.sessions(77, true),
+  --         starter.sections.builtin_actions(),
+  --       },
+  --       content_hooks = {
+  --         function(content)
+  --           local blank_content_line = { { type = 'empty', string = '' } }
+  --           local section_coords = starter.content_coords(content, 'section')
+  --           -- Insert backwards to not affect coordinates
+  --           for i = #section_coords, 1, -1 do
+  --             table.insert(content, section_coords[i].line + 1, blank_content_line)
+  --           end
+  --           return content
+  --         end,
+  --         starter.gen_hook.adding_bullet("» "),
+  --         starter.gen_hook.aligning('center', 'center'),
+  --       },
+  --       header = header_art,
+  --       footer = '',
+  --     })
+  --   end,
+  -- {
+  --   import = "custom.configs.coc"
+  -- },
+  { "ThePrimeagen/harpoon" },
+  {
+    'rmagatti/auto-session',
+    lazy = false,
+    init = function()
+      vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+        pattern = 'NvimTree*',
+        callback = function()
+          local api = require('nvim-tree.api')
+          local view = require('nvim-tree.view')
+
+          if not view.is_visible() then
+            api.tree.open()
+          end
+        end,
+      })
+      vim.t.bufs = vim.api.nvim_list_bufs()
+    end,
+    config = function()
+      require("auto-session").setup {
+        log_level = "error",
+        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
+        post_restore_cmds = {restore_tabs},
+        pre_save_cmds = {close_neotree},
+      }
+    end
+  },
   {
     "sindrets/diffview.nvim",
     -- lazy = false,
@@ -85,6 +182,22 @@ local plugins = {
     "Pocco81/auto-save.nvim",
     lazy = false
   },
+  -- {
+  --   "harrisoncramer/gitlab.nvim",
+  --   base_branch = "main",
+  --   port = 20136, -- The port of the Go server, which runs in the background
+  --   dependencies = {
+  --     "rcarriga/nvim-notify",
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim"
+  --   },
+  --   build = function () require("gitlab").build() end, -- Builds the Go binary
+  --   config = function()
+  --     -- vim.opt.termguicolors = true -- This is required if you aren't already initializing notify
+  --     require("notify").setup({ background_colour = "#000000" })  -- This is required if you aren't already initializing notify
+  --     require("gitlab").setup()
+  --   end,
+  -- },
   {
     'stevearc/aerial.nvim',
     init = function()
@@ -123,13 +236,18 @@ local plugins = {
   --     require("core.utils").load_mappings("dap_python")
   --   end,
   -- },
-  -- {
-  --   "jose-elias-alvarez/null-ls.nvim",
-  --   ft = {"python"},
-  --   opts = function()
-  --     return require "custom.configs.null-ls"
-  --   end,
-  -- },
+  {
+    "mhinz/vim-signify",
+    lazy = false,
+  },
+  {
+    "jose-elias-alvarez/null-ls.nvim",
+    lazy = false,
+    ft = {"python"},
+    opts = function()
+      return require "custom.configs.null-ls"
+    end,
+  },
   {
     "williamboman/mason.nvim",
     opts = {

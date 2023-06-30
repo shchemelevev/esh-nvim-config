@@ -12,6 +12,17 @@
  M.ui = {theme = 'solorized_light'}
  M.plugins = "custom.plugins"
  vim.wo.relativenumber = true
+ M.mappings = require "custom.mappings"
 -- map('n', ':', ';') -- change vertical to horizontal
+map('n', '[', '{') -- change vertical to horizontal
+map('n', ']', ']') -- change vertical to horizontal
+vim.cmd [[
+
+   augroup ilikecursorline
+      autocmd VimEnter * :highlight CursorLine guibg=#f0ead9
+   augroup END
+
+]]
+
 return M
 
