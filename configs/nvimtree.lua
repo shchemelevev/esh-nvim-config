@@ -24,6 +24,8 @@ local options = {
   },
   update_focused_file = {
     enable = false,
+    update_root = false,
+    ignore_list = {"*/.tox", ".tox"}
   },
 }
 
