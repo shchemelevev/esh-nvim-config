@@ -87,6 +87,7 @@ local plugins = {
   -- {
   --   import = "custom.configs.coc"
   -- },
+  {"RRethy/vim-illuminate", lazy=false},
   { "ThePrimeagen/harpoon" },
   {
     'rmagatti/auto-session',
@@ -121,6 +122,17 @@ local plugins = {
   },
   {'nvim-lua/popup.nvim'},
   {'RishabhRD/lspactions'},
+  {
+    "folke/lsp-colors.nvim",
+    config = function()
+      require("lsp-colors").setup({
+        Error = "#db4b4b",
+        Warning = "#e0af68",
+        Information = "#0db9d7",
+        Hint = "#10B981"
+      })
+    end
+  },
   {
       'crusj/bookmarks.nvim',
       lazy=false,

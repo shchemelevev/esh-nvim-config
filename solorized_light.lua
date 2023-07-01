@@ -69,7 +69,7 @@ M.base_16 = {
   base0B = "#2aa198",
   base0C = "#dc322f",
   base0D = "#268bd2",
-  base0E = "#859900",
+  base0E = "#dc322f",
   base0F = "#d33682",
 }
 

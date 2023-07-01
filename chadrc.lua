@@ -9,7 +9,7 @@
    vim.api.nvim_set_keymap(mode, lhs, rhs, options)
  end
 
- M.ui = {theme = 'solorized_light'}
+ M.ui = {theme = 'solorized_light', lsp_semantic_tokens=true}
  M.plugins = "custom.plugins"
  vim.wo.relativenumber = true
  M.mappings = require "custom.mappings"
@@ -23,6 +23,7 @@ vim.cmd [[
    augroup END
 
 ]]
+vim.g.lua_snippets_path = "~/develop/esh-nvim-config/snippets/"
 
 return M
 

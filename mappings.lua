@@ -7,6 +7,7 @@ local M = {}
 --       ["<C-a>"] = ""
 --   }
 -- }
+--
 
 -- Your custom mappings
 M.abc = {
@@ -22,7 +23,7 @@ M.abc = {
   },
 
   i = {
-     -- ["jk"] = { "<ESC>", "escape insert mode" , opts = { nowait = true }},
+     ["<C-;>"] = { '<cmd> lua if require("luasnip").expand_or_jumpable() then require("luasnip").expand_or_jump() end <CR>', "snip jump next" },
     -- ...
   }
 }
