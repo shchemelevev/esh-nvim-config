@@ -25,5 +25,10 @@ vim.cmd [[
 ]]
 vim.g.lua_snippets_path = "~/develop/esh-nvim-config/snippets/"
 
+vim.g.myfunc = function ()
+  local goto_any = require("custom.goto_any")
+  goto_any.run()
+end
+
 return M
 

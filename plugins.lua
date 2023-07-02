@@ -157,6 +157,20 @@ local plugins = {
       end
   },
   {
+    "nvim-neotest/neotest",
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "nvim-treesitter/nvim-treesitter",
+      "antoinemadec/FixCursorHold.nvim",
+      "nvim-neotest/neotest-python",
+      "nvim-neotest/neotest-plenary",
+      "nvim-neotest/neotest-vim-test",
+    },
+    config = function()
+      require "custom.configs.neotest"
+    end
+  },
+  {
    'prabirshrestha/vim-lsp'
   },
   {
