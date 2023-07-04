@@ -30,5 +30,27 @@ vim.g.myfunc = function ()
   goto_any.run()
 end
 
+vim.g.open_panel = function ()
+    require('neotest').output_panel.toggle()
+    vim.defer_fn(function()
+      vim.cmd([[normal! <C-j>]])
+      print("test")
+      -- local new_mode = vim.api.nvim_get_mode().mode
+      -- if new_mode ~= mode then
+      --   if string.find(new_mode, "i") == 1 then
+      --     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>", true, true, true), "n", false)
+      --     -- Optionally restore visual selection if we came from visual mode (is this common?)
+      --     if string.find(mode, "v") == 1 or string.find(mode, "V") == 1 then
+      --       vim.cmd([[normal! gv]])
+      --     end
+      --   end
+      -- end
+    end, 200)
+
+
+    -- vim.cmd(vim.api.nvim_replace_termcodes('normal <C-j>', true, true, true))
+    --vim.cmd(vim.api.nvim_replace_termcodes('normal <S-g>', true, true, true))
+end
+
 return M
 

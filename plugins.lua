@@ -170,6 +170,7 @@ local plugins = {
       require "custom.configs.neotest"
     end
   },
+  {"mbbill/undotree", lazy = false},
   {
    'prabirshrestha/vim-lsp'
   },

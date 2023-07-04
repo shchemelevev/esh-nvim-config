@@ -21,6 +21,7 @@ M.abc = {
      ["h5"] = { '<cmd> lua require("harpoon.ui").nav_file(5) <CR>', "harpoon file 5" },
      ["<C-a>"] = { '<cmd> lua require("harpoon.mark").add_file() <CR>', "harpoon add file" },
      ["<C-t>"] = { '<cmd> lua require("harpoon.ui").toggle_quick_menu() <CR>', "harpoon toggle" },
+     ["<C-p>"] = { '<cmd> b#<CR>', "previous buffer" },
     -- neotest
     ["<leader>ta"] = { "<cmd>lua require('neotest').run.attach()<cr>", "Attach" },
     ["<leader>tf"] = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run File" },
@@ -32,7 +33,8 @@ M.abc = {
     ["<leader>to"] = { "<cmd>lua require('neotest').output.open({ enter = true })<cr>", "Output" },
     ["<leader>tS"] = { "<cmd>lua require('neotest').run.stop()<cr>", "Stop" },
     ["<leader>ts"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Summary" },
-    ["<leader>gl"] = { "<cmd>lua vim.g.myfunc()<cr>", "custom go to file" },
+    ["<leader>tp"] = { "<cmd>lua vim.g.open_panel()<cr>", "Summary" },
+    ["<leader>gl"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
   },
 
   i = {

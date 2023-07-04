@@ -22,15 +22,24 @@
       --   ignore_file_types = { "python", "vim", "lua" },
       -- }),
     },
-    output = { open_on_run = true, enter = true },
-    -- quickfix = {
-    --   open = function()
-    --     -- vim.cmd("Trouble quickfix")
-    --     -- if require("lazy.util").has("trouble.nvim") then
-    --     --   vim.cmd("Trouble quickfix")
-    --     -- else
-    --     --   vim.cmd("copen")
-    --     -- end
-    --   end,
-    -- },
+    output_panel = {
+      enabled = true,
+      open = "botright split | resize 50",
+    },
+    quickfix = {
+      enabled = false,
+      open = false,
+    },
+    output = { open_on_run = false, enter = false },
+     -- quickfix = {
+     --   open = function()
+     --    lua require("neotest").output_panel.open()
+     --     -- vim.cmd("Trouble quickfix")
+     --     -- if require("lazy.util").has("trouble.nvim") then
+     --     --   vim.cmd("Trouble quickfix")
+     --     -- else
+     --     --   vim.cmd("copen")
+     --     -- end
+     --   end,
+     -- },
   })

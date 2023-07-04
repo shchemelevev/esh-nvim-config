@@ -83,23 +83,42 @@ local parse_str = function (line, workspace)
   end
 end
 
+function file_exists(name)
+   local f=io.open(name,"r")
+   if f~=nil then io.close(f) return true else return false end
+end
+
 M.run = function ()
   local line = vim.api.nvim_get_current_line()
   local workspace = vim.fn.getcwd()
   workspace = workspace .. '/'
   local data = parse_str(line, workspace)
-  local range = {
-    start= {line=data['file_line_number']-1, character=0},
-  }
+  if data then
+    local range = {
+      start= {line=data['file_line_number']-1, character=0},
+    }
 
-  range["end"] = {line=data['file_line_number']+1, character=0}
-  local location = "file://" .. data['file']
+    range["end"] = {line=data['file_line_number']+1, character=0}
 
-  vim.cmd(vim.api.nvim_replace_termcodes('normal <C-k>', true, true, true))
-  vim.cmd(vim.api.nvim_replace_termcodes('normal <C-l>', true, true, true))
-  vim.lsp.util.jump_to_location({uri=location, range=range }, "utf-8")
-  vim.cmd(vim.api.nvim_replace_termcodes('normal zz>', true, true, true))
+    if file_exists(data['file']) then
+      local location = "file://" .. data['file']
+
+      require("neotest").output_panel.close()
+      vim.defer_fn(function()
+        vim.cmd(vim.api.nvim_replace_termcodes('normal <C-k>', true, true, true))
+        vim.cmd(vim.api.nvim_replace_termcodes('normal <C-l>', true, true, true))
+        vim.cmd(vim.api.nvim_replace_termcodes('normal zz', true, true, true))
+        vim.lsp.util.jump_to_location({uri=location, range=range }, "utf-8")
+      end, 200)
+    else
+      print("File not found in workspace")
+    end
+
+  else
+    print("Location not found")
+  end
 end
+
 
 -- for key, value in pairs(test_examples) do
 --   print("test:")
