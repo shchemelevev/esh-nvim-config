@@ -22,14 +22,22 @@ local conds = require("luasnip.extras.conditions")
 
 ls.add_snippets("python", {
  	s(
+		"vdlog",
+		fmt('logger.debug(f"[DEV] {}{{{}}}")', {
+			i(1, "var"),
+      i(2, "var")
+		}
+    )
+	),
+ 	s(
 		"dlog",
-		fmt('logger.debug(f"[DEV] {{{}}}")', {
+		fmt('logger.debug(f"[DEV] {}")', {
 			i(1, "var"),
 		}
     )
 	),
  	s(
-		"vlog",
+		"ilog",
 		fmt('logger = logging.getLogger({})', t("__name__"))
   )
 })

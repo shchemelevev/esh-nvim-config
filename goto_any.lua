@@ -15,7 +15,41 @@ ex3["buf_line"] = "ERROR    accord_handlers_protobuf.logging_policy:logging_poli
 ex3['file'] = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accord_handlers_protobuf/logging_policy.py"
 ex3["file_line_number"] = 240
 
-local test_examples = {ex1, ex2, ex3}
+local ex4 = {}
+ex4["buf_line"] = "accounts/components/inventory/__init__.py:15: in <module>"
+ex4['file'] = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accounts/components/inventory/__init__.py"
+ex4["file_line_number"] = 15
+
+
+local ex5 = {}
+ex5["buf_line"] = "accord_handlers_protobuf/logging_policy.py:176: AttributeError"
+ex5['file'] = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accord_handlers_protobuf/logging_policy.py"
+ex5["file_line_number"] = 176
+
+local ex6 = {}
+ex6["buf_line"] = "ERROR    accord_handlers_protobuf.logging_policy:logging_policy.py:149 source: (/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accounts/components/matchmaker.py:176):"
+ex6['file'] = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accounts/components/matchmaker.py"
+ex6["file_line_number"] = 176
+
+-- local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6}
+local test_examples = {ex6}
+
+local function case4_parser(line, workspace)
+  -- print('case4')
+  local sloc, eloc = string.find(line, "source: %(.*%.py:%d+%)")
+  if sloc and eloc then
+    local subline = string.sub(line, sloc, eloc)
+    local sloc2, eloc2 = string.find(subline, ":%d+%)")
+    result = {}
+    result['file'] = string.sub(subline, 10, sloc2-1)
+    result['file_line_number'] = tonumber(string.sub(subline, sloc2+1, eloc2-1))
+    -- print("sloc "..sloc.."eloc "..eloc)
+    -- print(result['file'])
+    -- print(result['file_line_number'])
+    -- print(subline)
+    return result
+  end
+end
 
 local function case1_parser(line)
   local filename_pattern = '.*File ".*%.py", line '
@@ -68,18 +102,45 @@ local function case2_parser(line, workspace)
   return nil
 end
 
+local function case3_parser(line, workspace)
+  local pattern = ".*py:%d+:"
+  -- print("line: " .. line)
+  local sloc, eloc = string.find(line, pattern)
+  -- print("sloc "..sloc.." eloc "..eloc)
+  if sloc and eloc then
+    local sloc2, eloc2 = string.find(line, "py:%d+: ")
+    local number = tonumber(string.sub(line, sloc2+3, eloc2-2))
+    local filename = string.sub(line, 0, sloc2+1)
+    filename = workspace .. filename
+    -- print("filename " .. filename)
+    local result = {}
+    result['file'] =  filename
+    result['file_line_number'] = number
+    return result
+  end
+  return nil
+end
+
 local parse_str = function (line, workspace)
   local result = {}
   -- case 1
   local c1 = case1_parser(line)
   local c2 = case2_parser(line, workspace)
+  local c3 = case3_parser(line, workspace)
+  local c4 = case4_parser(line, workspace)
   -- print(c2)
-  if c1 then
-    -- print("return c1")
-    return c1
+  if c4 then
+    -- print("return c4")
+    return c4
   elseif c2 then
     -- print("return c2")
     return c2
+  elseif c3 then
+    -- print("return c2")
+    return c3
+  elseif c1 then
+    -- print("return c2")
+    return c1
   end
 end
 
@@ -120,20 +181,26 @@ M.run = function ()
 end
 
 
--- for key, value in pairs(test_examples) do
---   print("test:")
---   local workspace = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/"
---   local result = parse_str(value['buf_line'], workspace)
---   if result and value["file"] == result['file'] and value['file_line_number'] == result['file_line_number'] then
---     print("success")
---   else
---     print(value["file"])
---     print(result["file"])
---     print(value["file_line_number"])
---     print(result["file_line_number"])
---     print("failure")
---   end
--- end
+function test()
+  for key, value in pairs(test_examples) do
+    print("test:")
+    local workspace = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/"
+    local result = parse_str(value['buf_line'], workspace)
+    if result and value["file"] == result['file'] and value['file_line_number'] == result['file_line_number'] then
+      print("success")
+    else
+      print("failure")
+      if result then
+        print(value["file"])
+        print(result["file"])
+        print(value["file_line_number"])
+        print(result["file_line_number"])
+      end
+    end
+  end
+end
+
+-- test()
 
 return M
 

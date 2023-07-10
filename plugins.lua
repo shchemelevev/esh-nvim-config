@@ -116,6 +116,10 @@ local plugins = {
     end
   },
   {
+    "tpope/vim-fugitive",
+    lazy = false
+  },
+  {
     "sindrets/diffview.nvim",
     -- lazy = false,
     cmd="DiffviewOpen"
@@ -275,6 +279,7 @@ local plugins = {
       return require "custom.configs.null-ls"
     end,
   },
+  -- {"miyakogi/conoline.vim", lazy=false},
   {
     "williamboman/mason.nvim",
     opts = {

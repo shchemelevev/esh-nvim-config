@@ -2,7 +2,7 @@ local M = {}
 
 -- In order to disable a default keymap, use
 -- M.disabled = {
---   n = {
+--   t = {
 --       ["<leader>h"] = "",
 --       ["<C-a>"] = ""
 --   }
@@ -23,6 +23,7 @@ M.abc = {
      ["<C-t>"] = { '<cmd> lua require("harpoon.ui").toggle_quick_menu() <CR>', "harpoon toggle" },
      ["<C-p>"] = { '<cmd> b#<CR>', "previous buffer" },
     -- neotest
+    ["<leader>X"] = { "<cmd>:q<cr>", "Attach" },
     ["<leader>ta"] = { "<cmd>lua require('neotest').run.attach()<cr>", "Attach" },
     ["<leader>tf"] = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run File" },
     ["<leader>tF"] = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Debug File" },
@@ -33,13 +34,21 @@ M.abc = {
     ["<leader>to"] = { "<cmd>lua require('neotest').output.open({ enter = true })<cr>", "Output" },
     ["<leader>tS"] = { "<cmd>lua require('neotest').run.stop()<cr>", "Stop" },
     ["<leader>ts"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Summary" },
-    ["<leader>tp"] = { "<cmd>lua vim.g.open_panel()<cr>", "Summary" },
+    ["<leader>tp"] = { "<cmd>lua vim.g.open_panel()<cr>", "Pannel" },
+    ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>gl"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
   },
 
   i = {
      ["<C-;>"] = { '<cmd> lua if require("luasnip").expand_or_jumpable() then require("luasnip").expand_or_jump() end <CR>', "snip jump next" },
     -- ...
+  },
+  t = {
+   -- ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
+    ["<C-d>"] = { "<cmd>lua vim.g.move_coursor_down(20)<cr>", "Move coursor down" },
+    ["<C-u>"] = { "<cmd>lua vim.g.move_coursor_up(20)<cr>", "Move cursor up" },
+    ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
+    ["<leader>x"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
   }
 }
 

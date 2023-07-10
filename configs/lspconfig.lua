@@ -32,7 +32,7 @@ local on_attach = function(client, bufnr)
   --   client.server_capabilities.semanticTokensProvider = nil
   -- end
 
-  if client.resolved_capabilities.document_highlight then
+  if client.resolved_capabilities and client.resolved_capabilities.document_highlight then
     vim.cmd [[
       hi! LspReferenceRead cterm=bold ctermbg=235 guibg=LightYellow
       hi! LspReferenceText cterm=bold ctermbg=235 guibg=LightYellow

@@ -57,7 +57,7 @@ M.base_30 = {
 M.base_16 = {
   base00 = "#fdf6e3",
   base01 = "#eee8d5",
-  base02 = "#93a1a1",
+  base02 = "#C2BCAB",  -- selection colour
   base03 = "#839496",
   base04 = "#657b83",
   base05 = "#586e75",
@@ -72,6 +72,8 @@ M.base_16 = {
   base0E = "#dc322f",
   base0F = "#d33682",
 }
+
+#eaeaea 
 
 M.polish_hl = {
   DiffAdd = { fg = M.base_30.green },

@@ -43,7 +43,7 @@ benefits of dynamic (or "duck") typing and static typing.]],
                 params.bufname,
             }
         end,
-        to_temp_file = true,
+        to_temp_file = false,
         format = "line",
         check_exit_code = function(code)
             return code <= 2000
