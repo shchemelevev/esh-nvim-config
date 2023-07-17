@@ -37,6 +37,8 @@ M.abc = {
     ["<leader>tp"] = { "<cmd>lua vim.g.open_panel()<cr>", "Pannel" },
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>gl"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
+
+    ["<leader>fr"] = { "<cmd>Telescope resume<cr>", "Pannel" },
   },
 
   i = {
@@ -45,8 +47,8 @@ M.abc = {
   },
   t = {
    -- ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },
-    ["<C-d>"] = { "<cmd>lua vim.g.move_coursor_down(20)<cr>", "Move coursor down" },
-    ["<C-u>"] = { "<cmd>lua vim.g.move_coursor_up(20)<cr>", "Move cursor up" },
+    -- ["<C-d>"] = { "<cmd>lua vim.g.move_coursor_down(20)<cr>", "Move coursor down" },
+    -- ["<C-u>"] = { "<cmd>lua vim.g.move_coursor_up(20)<cr>", "Move cursor up" },
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>x"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
   }
