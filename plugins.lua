@@ -203,6 +203,10 @@ local plugins = {
     end,
   },
   {
+    'charludo/projectmgr.nvim',
+    lazy = false, -- important!
+  },
+  {
     "ibhagwan/fzf-lua",
     lazy = false,
     branch= "main",
@@ -293,6 +297,17 @@ local plugins = {
       },
     },
   },
+  {'kevinhwang91/nvim-bqf', ft = 'qf'},
+  {
+      "kylechui/nvim-surround",
+      version = "*", -- Use for stability; omit to use `main` branch for the latest features
+      event = "VeryLazy",
+      config = function()
+          require("nvim-surround").setup({
+              -- Configuration here, or leave empty to use defaults
+          })
+      end
+  },
   {
     "neovim/nvim-lspconfig",
     config = function()
@@ -300,5 +315,13 @@ local plugins = {
       require "custom.configs.lspconfig"
     end,
   },
+  {
+      'OscarCreator/rsync.nvim',
+      run = 'make',
+      requires = {'nvim-lua/plenary.nvim'},
+      config = function()
+          require("rsync").setup()
+      end
+  }
 }
 return plugins

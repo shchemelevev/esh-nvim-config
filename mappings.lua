@@ -35,6 +35,7 @@ M.abc = {
     ["<leader>tS"] = { "<cmd>lua require('neotest').run.stop()<cr>", "Stop" },
     ["<leader>ts"] = { "<cmd>lua require('neotest').summary.toggle()<cr>", "Summary" },
     ["<leader>tp"] = { "<cmd>lua vim.g.open_panel()<cr>", "Pannel" },
+    ["<leader>pm"] = { "<cmd>ProjectMgr<cr>", "ProjectMGR" },
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>gl"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
 

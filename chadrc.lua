@@ -12,6 +12,9 @@ M.ui = {
   }
 }
 
+vim.g.python_host_prog = "/Users/e_shchemelev/.virtualenvs/neovim2/bin/python"
+vim.g.python3_host_prog = '/Users/e_shchemelev/.virtualenvs/neovim3/bin/python'
+
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false
 })
