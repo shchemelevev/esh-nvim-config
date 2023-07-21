@@ -39,7 +39,12 @@ M.abc = {
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>gl"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
 
+    ["<leader>o"] = { "<cmd>Portal jumplist backward<cr>", "Summary" },
+    ["<leader>i"] = { "<cmd>Portal jumplist forward<cr>", "Summary" },
+
     ["<leader>fr"] = { "<cmd>Telescope resume<cr>", "Pannel" },
+
+    ["<leader>a"] = { "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>", "Toggle Aerial" },
   },
 
   i = {

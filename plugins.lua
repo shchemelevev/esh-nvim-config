@@ -137,29 +137,30 @@ local plugins = {
       })
     end
   },
-  {
-      'crusj/bookmarks.nvim',
-      lazy=false,
-      keys = {
-          { "<tab><tab>", mode = { "n" } },
-      },
-      branch = 'main',
-      dependencies = { 'nvim-web-devicons' },
-      config = function()
-          require("bookmarks").setup({
-             keymap = {
-                toggle = "<tab><tab>", -- toggle bookmarks
-                add = "mm", -- add bookmarks
-                jump = "<CR>", -- jump from bookmarks
-                delete = "dd", -- delete bookmarks
-                order = "<space><space>", -- order bookmarks by frequency or updated_time
-                delete_on_virt = "\\dd", -- delete bookmark at virt text line
-                show_desc = "\\sd" -- show bookmark desc
-            }
-          })
-          require("telescope").load_extension("bookmarks")
-      end
-  },
+
+  -- {
+  --     'crusj/bookmarks.nvim',
+  --     lazy=false,
+  --     keys = {
+  --         { "<tab><tab>", mode = { "n" } },
+  --     },
+  --     branch = 'main',
+  --     dependencies = { 'nvim-web-devicons' },
+  --     config = function()
+  --         require("bookmarks").setup({
+  --            keymap = {
+  --               toggle = "<tab><tab>", -- toggle bookmarks
+  --               add = "mm", -- add bookmarks
+  --               jump = "<CR>", -- jump from bookmarks
+  --               delete = "dd", -- delete bookmarks
+  --               order = "<space><space>", -- order bookmarks by frequency or updated_time
+  --               delete_on_virt = "\\dd", -- delete bookmark at virt text line
+  --               show_desc = "\\sd" -- show bookmark desc
+  --           }
+  --         })
+  --         require("telescope").load_extension("bookmarks")
+  --     end
+  -- },
   {
     "nvim-neotest/neotest",
     dependencies = {
@@ -243,6 +244,7 @@ local plugins = {
           -- Jump forwards/backwards with '{' and '}'
           vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
           vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
+          vim.cmd("NvimTreeClose")
         end
       })
     end,
@@ -252,6 +254,48 @@ local plugins = {
        "nvim-treesitter/nvim-treesitter",
        "nvim-tree/nvim-web-devicons"
     },
+  },
+  {
+    'm-demare/hlargs.nvim',
+    ft = "python",
+    init = function()
+      require('hlargs').setup(
+        {
+          color = "#6c71c4",
+          excluded_argnames = {
+            declarations = {
+                python = { 'self', 'cls' },
+            },
+            usages = {
+              python = { 'self', 'cls' },
+              lua = { 'self' }
+            }
+          },
+        }
+      )
+    end
+  },
+  {
+      "kwkarlwang/bufjump.nvim",
+      lazy=false,
+      init = function()
+          require("bufjump").setup()
+      end
+  },
+  {"ThePrimeagen/vim-be-good", lazy=false},
+  {
+      "cbochs/grapple.nvim",
+      lazy = false,
+      dependencies = { "nvim-lua/plenary.nvim" },
+  },
+  {
+      "cbochs/portal.nvim",
+      -- Optional dependencies
+      lazy = false,
+      dependencies = {
+          "cbochs/grapple.nvim",
+          "ThePrimeagen/harpoon"
+      },
   },
   -- {
   --   "mfussenegger/nvim-dap",
@@ -317,9 +361,10 @@ local plugins = {
   },
   {
       'OscarCreator/rsync.nvim',
-      run = 'make',
+      build = 'make',
+      lazy = false,
       requires = {'nvim-lua/plenary.nvim'},
-      config = function()
+      init = function()
           require("rsync").setup()
       end
   }
