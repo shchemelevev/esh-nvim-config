@@ -31,8 +31,18 @@ ex6["buf_line"] = "ERROR    accord_handlers_protobuf.logging_policy:logging_poli
 ex6['file'] = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accounts/components/matchmaker.py"
 ex6["file_line_number"] = 176
 
--- local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6}
-local test_examples = {ex6}
+local ex7 = {}
+ex7["buf_line"] = '  File "/usr/local/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py", line 80'
+ex7['file'] = "/usr/local/Cellar/python@3.11/3.11.4_1/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/events.py"
+ex7["file_line_number"] = 80
+
+local ex8 = {}
+ex8["buf_line"] = ' /Users/e_shchemelev/develop/accord/py-accord-handlers/.tox/py38/lib/python3.8/site-packages/asynctest/case.py:414: DeprecationWarning: "@coroutine" decorator is deprecated since Python'
+ex8['file'] = "/Users/e_shchemelev/develop/accord/py-accord-handlers/.tox/py38/lib/python3.8/site-packages/asynctest/case.py"
+ex8["file_line_number"] = 414
+
+local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8}
+-- local test_examples = {ex8}
 
 local function case4_parser(line, workspace)
   -- print('case4')
@@ -54,13 +64,14 @@ end
 local function case1_parser(line)
   local filename_pattern = '.*File ".*%.py", line '
   local sloc, eloc = string.find(line, filename_pattern)
-  local line_number_pattern = 'py", line %d+, '
+  local line_number_pattern = 'py", line %d+'
   local sloc2, eloc2 = string.find(line, line_number_pattern)
+  -- print(sloc2 .. eloc)
   local result = {}
   if sloc and eloc and sloc2 and eloc2 then
     -- print("name location " .. sloc .. " " .. eloc2)
     -- print("line location " .. sloc2 .. " " .. eloc2)
-    local line_num = tonumber(string.sub(line, sloc2+10, eloc2-2))
+    local line_num = tonumber(string.sub(line, sloc2+10, eloc2))
     -- print("line_number " .. line_num)
     local s1, e1 = string.find(line, '.*File "')
     -- print("s1 " .. s1 .. " e1 " .. e1)
@@ -103,16 +114,19 @@ local function case2_parser(line, workspace)
 end
 
 local function case3_parser(line, workspace)
-  local pattern = ".*py:%d+:"
+  local pattern = "[a-zA-z0-9%_%-%.%/]+%.py:%d+:"
   -- print("line: " .. line)
   local sloc, eloc = string.find(line, pattern)
   -- print("sloc "..sloc.." eloc "..eloc)
   if sloc and eloc then
     local sloc2, eloc2 = string.find(line, "py:%d+: ")
     local number = tonumber(string.sub(line, sloc2+3, eloc2-2))
-    local filename = string.sub(line, 0, sloc2+1)
-    filename = workspace .. filename
-    -- print("filename " .. filename)
+    local filename = string.sub(line, sloc, sloc2+1)
+    -- print("first part: " .. string.sub(filename, 0, 1))
+    if string.sub(filename, 0, 1) ~= '/' then
+      filename = workspace .. filename
+    end
+    -- print("filename " .. filename .. "location " .. number)
     local result = {}
     result['file'] =  filename
     result['file_line_number'] = number

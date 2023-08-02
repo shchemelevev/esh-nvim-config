@@ -359,7 +359,53 @@ local plugins = {
       require "custom.configs.lspconfig"
     end,
   },
+  -- {
+  --   "Exafunction/codeium.vim",
+  --   lazy=false,
+  --   config = function ()
+  --     -- Change '<C-g>' here to any keycode you like.
+  --     vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
+  --     vim.keymap.set('i', '<C-m>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
+  --     vim.keymap.set('i', '<C-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
+  --     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+  --   end
+  -- },
+  -- {
+  --   "m4xshen/hardtime.nvim",
+  --   lazy=false,
+  --   opts = {}
+  -- },
+  -- {'antonk52/bad-practices.nvim', lazy=false,
+  --   setup = function()
+  --     require('bad_practices.nvim').setup({
+  --         most_splits = 3, -- how many splits are considered a good practice(default: 3)
+  --         most_tabs = 3, -- how many tabs are considered a good practice(default: 3)
+  --         max_hjkl = 5, -- how many times you can spam hjkl keys in a row(default: 10)
+  --     })
+  --   end
+  -- },
   {
+    'smoka7/hop.nvim',
+    lazy=false,
+    init=function()
+      require'hop'.setup({create_hl_autocmd=false})
+      vim.api.nvim_command('highlight default HopNextKey  guifg=#F7954F gui=bold ctermfg=198 cterm=bold')
+      vim.api.nvim_command('highlight default HopNextKey1 guifg=#89bfdc gui=bold ctermfg=45 cterm=bold')
+      vim.api.nvim_command('highlight default HopNextKey2 guifg=#2b8db3 ctermfg=33')
+    end
+  },
+  {"chrisgrieser/nvim-spider", lazy=false},
+  {'nanozuki/tabby.nvim', lazy=false},
+  {
+    "kdheepak/lazygit.nvim",
+    lazy = false,
+    -- optional for floating window border decoration
+    dependencies = {
+        "nvim-lua/plenary.nvim",
+    },
+  },
+  {
+    -- config location {project_root}/.nvim/rsync.toml
       'OscarCreator/rsync.nvim',
       build = 'make',
       lazy = false,

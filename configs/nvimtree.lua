@@ -18,6 +18,24 @@ vim.api.nvim_create_autocmd("BufEnter", {
   end
 })
 
+local function my_on_attach(bufnr)
+  local api = require "nvim-tree.api"
+
+  local function opts(desc)
+    return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
+  end
+
+  -- default mappings
+  api.config.mappings.default_on_attach(bufnr)
+
+  local hop = require('hop')
+  local directions = require('hop.hint').HintDirection
+
+  -- for some reason it doesn't work properly
+  vim.keymap.set("n", "k", hop.hint_word({direction=directions.BEFORE_CURSOR}))
+  vim.keymap.set("n", "j", hop.hint_word({direction=directions.AFTER_CURSOR}))
+end
+
 local options = {
   filters = {
     custom = { "__pycache__", ".mypy_cache", '.idea', '*.git', '.cargo'}
@@ -27,6 +45,7 @@ local options = {
     update_root = false,
     ignore_list = {"*/.tox", ".tox"}
   },
+  on_attach = my_on_attach,
 }
 
 return options

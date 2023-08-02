@@ -43,8 +43,17 @@ M.abc = {
     ["<leader>i"] = { "<cmd>Portal jumplist forward<cr>", "Summary" },
 
     ["<leader>fr"] = { "<cmd>Telescope resume<cr>", "Pannel" },
+    ["w"] = { "<cmd>lua require('spider').motion('w')<CR>", "word"},
+    ["e"] = { "<cmd>lua require('spider').motion('e')<CR>", "end"},
+    ["b"] = { "<cmd>lua require('spider').motion('b')<CR>", "end"},
 
     ["<leader>a"] = { "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>", "Toggle Aerial" },
+    ["<leader>lg"] = { "<cmd> LazyGit<CR>", "LazyGit" },
+
+    ["<UP>"] = { "<cmd> HopWordBC<CR>", "HopWordBC" },
+    ["<DOWN>"] = { "<cmd> HopWordAC<CR>", "HopWordAC" },
+    ["<LEFT>"] = { "<cmd> HopLineBC<CR>", "HopLineStartBC" },
+    ["<RIGHT>"] = { "<cmd> HopLineAC<CR>", "HopLineStartAC" },
   },
 
   i = {
@@ -57,6 +66,7 @@ M.abc = {
     -- ["<C-u>"] = { "<cmd>lua vim.g.move_coursor_up(20)<cr>", "Move cursor up" },
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>x"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
+    ["<ESC>"] = {'<cmd>lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true), "n", false)<cr>', "exit from terminal insert mode"}
   }
 }
 

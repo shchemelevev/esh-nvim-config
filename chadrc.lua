@@ -15,6 +15,22 @@ M.ui = {
 vim.g.python_host_prog = "/Users/e_shchemelev/.virtualenvs/neovim2/bin/python"
 vim.g.python3_host_prog = '/Users/e_shchemelev/.virtualenvs/neovim3/bin/python'
 
+vim.g.terminal_color_0 = "#fdf6e3"
+vim.g.terminal_color_1 = "#dc322f"  -- "#eee8d5"
+vim.g.terminal_color_2 = "#859900"
+vim.g.terminal_color_3 = "#839496"
+vim.g.terminal_color_4 = "#657b83"
+vim.g.terminal_color_5 = "#586e75"
+vim.g.terminal_color_6 = "#073642"
+vim.g.terminal_color_7 = "#002b36"
+vim.g.terminal_color_8 = "#859900"
+vim.g.terminal_color_9 = "#2aa198"
+vim.g.terminal_color_10 = "#268bd2"
+vim.g.terminal_color_11 = "#2aa198"
+vim.g.terminal_color_12 = "#dc322f"
+vim.g.terminal_color_13 = "#268bd2"
+vim.g.terminal_color_14 = "#dc322f"
+
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false
 })
