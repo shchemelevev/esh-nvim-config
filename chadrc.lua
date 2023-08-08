@@ -12,6 +12,17 @@ M.ui = {
   }
 }
 
+
+local config_group = vim.api.nvim_create_augroup('MyConfigGroup', {}) -- A global group for all your config autocommands
+
+vim.api.nvim_create_autocmd({ 'User' }, {
+  pattern = "SessionLoadPost",
+  group = config_group,
+  callback = function()
+    require('nvim-tree.api').tree.toggle(false, true)
+  end,
+})
+
 vim.g.python_host_prog = "/Users/e_shchemelev/.virtualenvs/neovim2/bin/python"
 vim.g.python3_host_prog = '/Users/e_shchemelev/.virtualenvs/neovim3/bin/python'
 
@@ -30,6 +41,8 @@ vim.g.terminal_color_11 = "#2aa198"
 vim.g.terminal_color_12 = "#dc322f"
 vim.g.terminal_color_13 = "#268bd2"
 vim.g.terminal_color_14 = "#dc322f"
+
+
 
 local id = vim.api.nvim_create_augroup("startup", {
   clear = false

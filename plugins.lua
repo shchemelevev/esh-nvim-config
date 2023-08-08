@@ -89,32 +89,32 @@ local plugins = {
   -- },
   {"RRethy/vim-illuminate", lazy=false},
   { "ThePrimeagen/harpoon" },
-  {
-    'rmagatti/auto-session',
-    lazy = false,
-    init = function()
-      vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-        pattern = 'NvimTree*',
-        callback = function()
-          local api = require('nvim-tree.api')
-          local view = require('nvim-tree.view')
-
-          if not view.is_visible() then
-            api.tree.open()
-          end
-        end,
-      })
-      vim.t.bufs = vim.api.nvim_list_bufs()
-    end,
-    config = function()
-      require("auto-session").setup {
-        log_level = "error",
-        auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
-        post_restore_cmds = {restore_tabs},
-        pre_save_cmds = {close_neotree},
-      }
-    end
-  },
+  -- {
+  --   'rmagatti/auto-session',
+  --   lazy = false,
+  --   init = function()
+  --     vim.api.nvim_create_autocmd({ 'BufEnter' }, {
+  --       pattern = 'NvimTree*',
+  --       callback = function()
+  --         local api = require('nvim-tree.api')
+  --         local view = require('nvim-tree.view')
+  --
+  --         if not view.is_visible() then
+  --           api.tree.open()
+  --         end
+  --       end,
+  --     })
+  --     vim.t.bufs = vim.api.nvim_list_bufs()
+  --   end,
+  --   config = function()
+  --     require("auto-session").setup {
+  --       log_level = "error",
+  --       auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
+  --       post_restore_cmds = {restore_tabs},
+  --       pre_save_cmds = {close_neotree},
+  --     }
+  --   end
+  -- },
   {
     "tpope/vim-fugitive",
     lazy = false
@@ -204,9 +204,30 @@ local plugins = {
     end,
   },
   {
-    'charludo/projectmgr.nvim',
-    lazy = false, -- important!
+    'Shatur/neovim-session-manager', lazy=false,
+    init=function ()
+      local Path = require('plenary.path')
+      local config = require('session_manager.config')
+      require('session_manager').setup({
+        sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'), -- The directory where the session files will be saved.
+        autoload_mode = config.AutoloadMode.CurrentDir, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
+        autosave_last_session = true, -- Automatically save last session on exit and on session switch.
+        autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
+        -- autosave_ignore_dirs = {}, -- A list of directories where the session will not be autosaved.
+        autosave_ignore_filetypes = { -- All buffers of these file types will be closed before the session is saved.
+          'gitcommit',
+          'gitrebase',
+        },
+        -- autosave_ignore_buftypes = {}, -- All buffers of these bufer types will be closed before the session is saved.
+        -- autosave_only_in_session = false, -- Always autosaves session. If true, only autosaves after a session is active.
+        max_path_length = 80,  -- Shorten the display path if length exceeds this threshold. Use 0 if don't want to shorten the path at all.
+      })
+    end
   },
+  -- {
+  --   'charludo/projectmgr.nvim',
+  --   lazy = false, -- important!
+  -- },
   {
     "ibhagwan/fzf-lua",
     lazy = false,
@@ -396,6 +417,12 @@ local plugins = {
   },
   {"chrisgrieser/nvim-spider", lazy=false},
   {'nanozuki/tabby.nvim', lazy=false},
+  {'nvim-telescope/telescope-ui-select.nvim' ,
+    init=function ()
+      require("telescope").load_extension("ui-select")
+    end,
+    dependencies= {"nvim-telescope/telescope.nvim"},
+  },
   {
     "kdheepak/lazygit.nvim",
     lazy = false,
@@ -404,6 +431,7 @@ local plugins = {
         "nvim-lua/plenary.nvim",
     },
   },
+  {'nfvs/vim-perforce', lazy=false},
   {
     -- config location {project_root}/.nvim/rsync.toml
       'OscarCreator/rsync.nvim',

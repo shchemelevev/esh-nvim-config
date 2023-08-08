@@ -41,8 +41,13 @@ ex8["buf_line"] = ' /Users/e_shchemelev/develop/accord/py-accord-handlers/.tox/p
 ex8['file'] = "/Users/e_shchemelev/develop/accord/py-accord-handlers/.tox/py38/lib/python3.8/site-packages/asynctest/case.py"
 ex8["file_line_number"] = 414
 
-local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8}
--- local test_examples = {ex8}
+local ex9 = {}
+ex9['buf_line'] = 'E     File "/Users/e_shchemelev/Perforce/e_shchemelev_CY1-AL-012_ACCORD-2673_nprs_db_logs_7494/game/hammer/res/scripts/base/account_helpers/receipt_log_db_writer.py", line 176'
+ex9['file'] = '/Users/e_shchemelev/Perforce/e_shchemelev_CY1-AL-012_ACCORD-2673_nprs_db_logs_7494/game/hammer/res/scripts/base/account_helpers/receipt_log_db_writer.py'
+ex9['file_line_number'] = 176
+
+-- local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8}
+local test_examples = {ex9}
 
 local function case4_parser(line, workspace)
   -- print('case4')
@@ -168,6 +173,13 @@ M.run = function ()
   local workspace = vim.fn.getcwd()
   workspace = workspace .. '/'
   local data = parse_str(line, workspace)
+  -- print(data)
+  if not data then
+    local row = vim.api.nvim_win_get_cursor(0)[1]
+    local lines = table.concat(vim.api.nvim_buf_get_lines(0, row-1, row+1, false))
+    -- print(lines)
+    data = parse_str(lines, workspace)
+  end
   if data then
     local range = {
       start= {line=data['file_line_number']-1, character=0},

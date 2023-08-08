@@ -5,6 +5,11 @@ local options = {
         follow = true
       }
     },
+    extensions = {
+      ["ui-select"] = {
+        require("telescope.themes").get_dropdown {}
+      }
+    }
   }
 }
 

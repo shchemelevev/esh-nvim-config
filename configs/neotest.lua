@@ -15,7 +15,7 @@
           -- Can also be a function to return dynamic value.
           -- If not provided, the path will be inferred by checking for 
           -- virtual envs in the local directory and for Pipenev/Poetry configs
-          python = ".tox/py310/bin/python"
+          python = ".tox/mypy/bin/python"
       }),
       require("neotest-plenary"),
       -- require("neotest-vim-test")({
