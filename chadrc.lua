@@ -23,6 +23,7 @@ vim.api.nvim_create_autocmd({ 'User' }, {
   end,
 })
 
+
 vim.g.python_host_prog = "/Users/e_shchemelev/.virtualenvs/neovim2/bin/python"
 vim.g.python3_host_prog = '/Users/e_shchemelev/.virtualenvs/neovim3/bin/python'
 
@@ -127,6 +128,15 @@ vim.g.close_panel = function ()
     require('neotest').output_panel.close()
     vim.defer_fn(function()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-w>l", true, false, true), "n", false)
+    end, 200)
+end
+
+
+vim.g.run_cmd1 = function ()
+    require("harpoon.term").gotoTerminal(1)
+    require("harpoon.term").sendCommand(1, 1)           -- sends command 1 to term 1
+    vim.defer_fn(function()
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("G", true, false, true), "n", false)
     end, 200)
 end
 

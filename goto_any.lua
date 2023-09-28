@@ -192,6 +192,7 @@ M.run = function ()
 
       require("neotest").output_panel.close()
       vim.defer_fn(function()
+        vim.cmd(vim.api.nvim_replace_termcodes('normal <C-w>h', true, true, true))
         vim.cmd(vim.api.nvim_replace_termcodes('normal <C-k>', true, true, true))
         vim.cmd(vim.api.nvim_replace_termcodes('normal <C-l>', true, true, true))
         vim.cmd(vim.api.nvim_replace_termcodes('normal zz', true, true, true))

@@ -88,7 +88,31 @@ local plugins = {
   --   import = "custom.configs.coc"
   -- },
   {"RRethy/vim-illuminate", lazy=false},
-  { "ThePrimeagen/harpoon" },
+  {
+    "ThePrimeagen/harpoon",
+    lazy=false,
+    setup = function()
+      require("harpoon").setup({
+        tabline = true,
+        enter_on_sendcmd = true
+      })
+    end
+  },
+  {
+    'RishabhRD/lspactions',
+    lazy=false,
+    dependencies = {
+      'nvim-lua/popup.nvim',
+      'nvim-lua/plenary.nvim'
+    }
+  },
+  {
+    'VonHeikemen/fine-cmdline.nvim',
+    lazy=false,
+    dependencies = {
+      {'MunifTanjim/nui.nvim'}
+    }
+  },
   -- {
   --   'rmagatti/auto-session',
   --   lazy = false,
@@ -122,9 +146,20 @@ local plugins = {
   {
     "sindrets/diffview.nvim",
     -- lazy = false,
-    cmd="DiffviewOpen"
+    cmd="DiffviewOpen",
+    config = function ()
+      local a = require "custom.configs.diffview"
+      require('diffview').setup(a.config)
+    end
   },
   {'nvim-lua/popup.nvim'},
+  {
+    "smjonas/inc-rename.nvim",
+    lazy=false,
+    config = function()
+      require("inc_rename").setup()
+    end,
+  },
   {'RishabhRD/lspactions'},
   {
     "folke/lsp-colors.nvim",
@@ -198,7 +233,7 @@ local plugins = {
       require("dir-telescope").setup({
         -- these are the default options set
         hidden = true,
-        no_ignore = false,
+        no_ignore = true,
         show_preview = true,
       })
     end,
@@ -441,6 +476,30 @@ local plugins = {
       init = function()
           require("rsync").setup()
       end
+  },
+  { "averms/black-nvim", lazy=false, ft = "python"},
+  {'f-person/git-blame.nvim', lazy=false,
+    init=function ()
+      vim.g.gitblame_enabled = 1
+      vim.g.gitblame_message_template = '<author> • <summary>'
+      vim.g.gitblame_virtual_text_column = 80
+      require('gitblame').setup {
+           --Note how the `gitblame_` prefix is omitted in `setup`
+          enabled = true,
+
+      }
+    end
+  },
+  {
+    "harrisoncramer/gitlab.nvim",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim"
+    },
+    build = function () require("gitlab").build() end, -- Builds the Go binary
+    config = function()
+      require("gitlab").setup()
+    end,
   }
 }
 return plugins

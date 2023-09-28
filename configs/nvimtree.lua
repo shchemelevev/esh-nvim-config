@@ -38,7 +38,7 @@ end
 
 local options = {
   filters = {
-    custom = { "__pycache__", ".mypy_cache", '.idea', '*.git', '.cargo'}
+    custom = { "__pycache__", ".mypy_cache", '.idea', '*.git'}
   },
   update_focused_file = {
     enable = false,
