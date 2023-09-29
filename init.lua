@@ -14,3 +14,9 @@ if vim.g.neovide then
   vim.o.guifont = "AnonymicePro Nerd Font Mono:h18" -- text below applies for VimScript
   vim.g.neovide_cursor_animate_in_insert_mode = false
 end
+
+vim.cmd('highlight! HarpoonInactive guibg=NONE guifg=#63698c')
+vim.cmd('highlight! HarpoonActive guibg=NONE guifg=#268bd2')
+vim.cmd('highlight! HarpoonNumberActive guibg=NONE guifg=#839496')
+vim.cmd('highlight! HarpoonNumberInactive guibg=NONE guifg=#839496')
+vim.cmd('highlight! TabLineFill guibg=NONE guifg=#eee8d5')
