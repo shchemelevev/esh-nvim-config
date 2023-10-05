@@ -500,6 +500,13 @@ local plugins = {
     config = function()
       require("gitlab").setup()
     end,
+  },
+  {
+    "ray-x/lsp_signature.nvim",
+    event = "VeryLazy",
+    opts = {},
+    ft = "python",
+    config = function(_, opts) require'lsp_signature'.setup(opts) end
   }
 }
 return plugins
