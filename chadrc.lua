@@ -132,13 +132,19 @@ vim.g.close_panel = function ()
 end
 
 
-vim.g.run_cmd1 = function ()
-    require("harpoon.term").gotoTerminal(1)
-    require("harpoon.term").sendCommand(1, 1)           -- sends command 1 to term 1
+vim.g.run_cmd_in_harpoon_term = function (term_number, cmd_number)
+    require("harpoon.term").gotoTerminal(term_number)
+    require("harpoon.term").sendCommand(term_number, cmd_number)           -- sends command 1 to term 1
     vim.defer_fn(function()
       vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("G", true, false, true), "n", false)
     end, 200)
 end
+
+vim.api.nvim_set_hl(
+      0, -- global highlight group
+      'SpellBad',
+      { fg= "#fdf6e3", bg = "#F7954F", underline = true }
+)
 
 
 vim.g.move_coursor_down = function (number)
@@ -153,4 +159,5 @@ M.plugins = "custom.plugins"
 M.mappings = require "custom.mappings"
 
 return M
+
 

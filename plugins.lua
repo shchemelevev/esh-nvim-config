@@ -450,7 +450,7 @@ local plugins = {
       vim.api.nvim_command('highlight default HopNextKey2 guifg=#2b8db3 ctermfg=33')
     end
   },
-  {"chrisgrieser/nvim-spider", lazy=false},
+  -- {"chrisgrieser/nvim-spider", lazy=false},
   {'nanozuki/tabby.nvim', lazy=false},
   {'nvim-telescope/telescope-ui-select.nvim' ,
     init=function ()
@@ -502,11 +502,22 @@ local plugins = {
     end,
   },
   {
+    "hinell/lsp-timeout.nvim",
+    dependencies={ "neovim/nvim-lspconfig" }
+  },
+  {
     "ray-x/lsp_signature.nvim",
     event = "VeryLazy",
     opts = {},
     ft = "python",
     config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+  {
+    "nvim-pack/nvim-spectre",
+    lazy = false,
+    init = function()
+        require('spectre').setup()
+    end
   }
 }
 return plugins

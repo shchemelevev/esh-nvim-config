@@ -14,24 +14,31 @@ M.abc = {
   n = {
      -- ["<C-n>"] = {"<cmd> Telescope <CR>", "Telescope"},
      -- ["<C-s>"] = {":Telescope Files <CR>", "Telescope Files"},
-     ["fy"] = { '<cmd> lua vim.g.run_cmd1() <CR>', "harpoon file 1" },
+     ["fu"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 1) <CR>', "harpoon term 1 cmd 1" },
+     ["fi"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 2) <CR>', "harpoon term 1 cmd 2" },
+     ["fo"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 3) <CR>', "harpoon term 1 cmd 3" },
+     ["fp"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 4) <CR>', "harpoon term 1 cmd 4" },
+     ["fy"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 5) <CR>', "harpoon term 1 cmd 5" },
      ["f'"] = { '<cmd> lua require("harpoon.cmd-ui").toggle_quick_menu() <CR>', "harpoon file 1" },
      ["fj"] = { '<cmd> lua require("harpoon.ui").nav_file(1) <CR>', "harpoon file 1" },
      ["fk"] = { '<cmd> lua require("harpoon.ui").nav_file(2) <CR>', "harpoon file 2" },
      ["fl"] = { '<cmd> lua require("harpoon.ui").nav_file(3) <CR>', "harpoon file 3" },
      ["f;"] = { '<cmd> lua require("harpoon.ui").nav_file(4) <CR>', "harpoon file 4" },
+     ["fh"] = { '<cmd> lua require("harpoon.ui").nav_file(5) <CR>', "harpoon file 5" },
      -- ["f;"] = { '<cmd> lua require("harpoon.ui").nav_file(5) <CR>', "harpoon file 5" },
-     ["fn"] = { '<cmd> lua require("harpoon.term").gotoTerminal(1) <CR>', "harpoon terminal 1" },
-     ["fm"] = { '<cmd> lua require("harpoon.term").gotoTerminal(2) <CR>', "harpoon terminal 2" },
-     ["f,"] = { '<cmd> lua require("harpoon.term").gotoTerminal(3) <CR>', "harpoon terminal 3" },
-     ["f."] = { '<cmd> lua require("harpoon.term").gotoTerminal(4) <CR>', "harpoon terminal 4" },
-     ["f/"] = { '<cmd> lua require("harpoon.term").gotoTerminal(5) <CR>', "harpoon terminal 5" },
+     ["fm"] = { '<cmd> lua require("harpoon.term").gotoTerminal(1) <CR>', "harpoon terminal 1" },
+     ["f,"] = { '<cmd> lua require("harpoon.term").gotoTerminal(2) <CR>', "harpoon terminal 2" },
+     ["f."] = { '<cmd> lua require("harpoon.term").gotoTerminal(3) <CR>', "harpoon terminal 3" },
+     ["f/"] = { '<cmd> lua require("harpoon.term").gotoTerminal(4) <CR>', "harpoon terminal 4" },
+     ["fn"] = { '<cmd> lua require("harpoon.term").gotoTerminal(5) <CR>', "harpoon terminal 5" },
      ["ft"] = { '<cmd> lua require("harpoon.term").sendCommand(1, "mypy tests/test_new_typing.py\\n") <CR>', "harpoon mypy to term 1"},
      ["<C-a>"] = { '<cmd> lua require("harpoon.mark").add_file() <CR>', "harpoon add file" },
      ["<C-t>"] = { '<cmd> lua require("harpoon.ui").toggle_quick_menu() <CR>', "harpoon toggle" },
      ["<C-p>"] = { '<cmd> b#<CR>', "previous buffer" },
-    ["<CR>"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
-    ["<leader>ar"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
+     ["<leader>T"] = { '<cmd> TroubleToggle<CR>', "previous buffer" },
+
+     [";"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
+     ["<leader>ar"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
 
     -- neotest
     ["<leader>X"] = { "<cmd>:q<cr>", "Attach" },
@@ -63,9 +70,9 @@ M.abc = {
     ["<leader>gld"] = { "<cmd>lua require('gitlab').list_discussions()<cr>", "List discussions" },
 
     ["<leader>fr"] = { "<cmd>Telescope resume<cr>", "Pannel" },
-    ["w"] = { "<cmd>lua require('spider').motion('w')<CR>", "word"},
-    ["e"] = { "<cmd>lua require('spider').motion('e')<CR>", "end"},
-    ["b"] = { "<cmd>lua require('spider').motion('b')<CR>", "end"},
+    -- ["w"] = { "<cmd>lua require('spider').motion('w')<CR>", "word"},
+    -- ["e"] = { "<cmd>lua require('spider').motion('e')<CR>", "end"},
+    -- ["b"] = { "<cmd>lua require('spider').motion('b')<CR>", "end"},
 
     ["<leader>a"] = { "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>", "Toggle Aerial" },
     ["<leader>lg"] = { "<cmd> LazyGit<CR>", "LazyGit" },
@@ -75,11 +82,19 @@ M.abc = {
     ["<DOWN>"] = { "<cmd> HopWordAC<CR>", "HopWordAC" },
     ["<LEFT>"] = { "<cmd> HopLineBC<CR>", "HopLineStartBC" },
     ["<RIGHT>"] = { "<cmd> HopLineAC<CR>", "HopLineStartAC" },
+
+    -- spectre
+    ['<leader>S'] = {'<cmd>lua require("spectre").toggle()<CR>', "Toggle Spectre" },
+    ['<leader>sw'] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>', "Search current word"},
   },
 
   i = {
      ["<C-;>"] = { '<cmd> lua if require("luasnip").expand_or_jumpable() then require("luasnip").expand_or_jump() end <CR>', "snip jump next" },
     -- ...
+  },
+  v = {
+    ['<leader>sw'] = {'<esc><cmd>lua require("spectre").open_visual()<CR>', "Search current word"},
+    ['<leader>sp'] = {'<cmd>lua require("spectre").open_file_search({select_word=true})<CR>', "Search on current file"},
   },
   t = {
    -- ["<C-x>"] = { vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, true, true), "Escape terminal mode" },

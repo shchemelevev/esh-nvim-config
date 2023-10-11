@@ -20,3 +20,23 @@ vim.cmd('highlight! HarpoonActive guibg=NONE guifg=#268bd2')
 vim.cmd('highlight! HarpoonNumberActive guibg=NONE guifg=#839496')
 vim.cmd('highlight! HarpoonNumberInactive guibg=NONE guifg=#839496')
 vim.cmd('highlight! TabLineFill guibg=NONE guifg=#eee8d5')
+
+
+
+vim.keymap.set('', ';', ':')
+vim.keymap.set('', "'", '"')
+vim.keymap.set('', "q", '')
+vim.keymap.set('', "Q", 'q')
+vim.keymap.set('', "c", '"_c')
+vim.keymap.set('', "C", '"_C')
+vim.keymap.set('', "s", '"_s')
+vim.keymap.set('', "S", '"_S')
+
+vim.opt.spelllang = "en_us"
+vim.opt.spell = true
+
+local autocmd = vim.api.nvim_create_autocmd   -- Create autocommand
+autocmd('TermOpen', {
+  pattern = '',
+  command = ":setlocal nospell"
+})

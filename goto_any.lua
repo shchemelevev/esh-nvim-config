@@ -171,7 +171,12 @@ end
 M.run = function ()
   local line = vim.api.nvim_get_current_line()
   local workspace = vim.fn.getcwd()
+
   workspace = workspace .. '/'
+  if vim.g.go_to_any_prefix then
+    workspace = workspace .. vim.g.go_to_any_prefix  .. '/'
+  end
+
   local data = parse_str(line, workspace)
   -- print(data)
   if not data then
