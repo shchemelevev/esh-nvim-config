@@ -276,6 +276,7 @@ local plugins = {
   },
   {
     "Pocco81/auto-save.nvim",
+    event="InsertEnter",
     lazy = false
   },
   -- {
@@ -463,8 +464,12 @@ local plugins = {
   },
   {
     "kdheepak/lazygit.nvim",
-    lazy = false,
+    lazy = true,
     -- optional for floating window border decoration
+    keys = {
+      { "<leager>lg", "<cmd> LazyGit<CR>"}
+    },
+    cmd = "LazyGit",
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
