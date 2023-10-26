@@ -38,6 +38,7 @@ M.abc = {
      ["<leader>T"] = { '<cmd> TroubleToggle<CR>', "previous buffer" },
 
      [";"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
+     [":"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
      ["<leader>ar"] = {'<cmd>FineCmdline<CR>', 'fine cmdline'},
 
     -- neotest

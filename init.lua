@@ -23,7 +23,6 @@ vim.cmd('highlight! TabLineFill guibg=NONE guifg=#eee8d5')
 
 
 
-vim.keymap.set('', ';', ':')
 vim.keymap.set('', "'", '"')
 vim.keymap.set('', "q", '')
 vim.keymap.set('', "Q", 'q')

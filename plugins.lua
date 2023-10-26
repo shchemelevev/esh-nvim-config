@@ -94,7 +94,10 @@ local plugins = {
     setup = function()
       require("harpoon").setup({
         tabline = true,
-        enter_on_sendcmd = true
+        enter_on_sendcmd = true,
+        menu = {
+            width = 120
+        }
       })
     end
   },
@@ -511,6 +514,20 @@ local plugins = {
     opts = {},
     ft = "python",
     config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+  {'psliwka/vim-dirtytalk', 
+    lazy=false,
+    -- #init=function()
+      -- vim.cmd("DirtytalkUpdat")
+    -- end
+  },
+  {
+      "norseghost/nvimwordlist",
+      run = "NvimWordlistUpdate",
+      lazy=false,
+      config = function()
+          vim.opt.spelllang:append("vim")
+      end
   },
   {
     "nvim-pack/nvim-spectre",

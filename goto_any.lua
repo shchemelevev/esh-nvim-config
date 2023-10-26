@@ -46,8 +46,18 @@ ex9['buf_line'] = 'E     File "/Users/e_shchemelev/Perforce/e_shchemelev_CY1-AL-
 ex9['file'] = '/Users/e_shchemelev/Perforce/e_shchemelev_CY1-AL-012_ACCORD-2673_nprs_db_logs_7494/game/hammer/res/scripts/base/account_helpers/receipt_log_db_writer.py'
 ex9['file_line_number'] = 176
 
--- local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8}
-local test_examples = {ex9}
+local ex10 = {}
+ex10['buf_line'] = 'groups/actor.py                      71     22    69%   76, 80-89, 95-97, 100-108, 131-133, 137-139'
+ex10['file'] = 'groups/actor.py                      71     22    69%   76, 80-89, 95-97, 100-108, 131-133, 137-139'
+ex10['file_line_number'] = 1
+
+local ex11 = {}
+ex11["buf_line"] = "accord_handlers/custom_types.py:5:1: F401 'typing.Dict' imported but unused"
+ex11['file'] = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/accord_handlers/custom_types.py"
+ex11['file_line_number'] = 5
+
+-- local test_examples = {ex1, ex2, ex3, ex4, ex5, ex6, ex7, ex8, ex10}
+local test_examples = {ex11}
 
 local function case4_parser(line, workspace)
   -- print('case4')
@@ -119,13 +129,17 @@ local function case2_parser(line, workspace)
 end
 
 local function case3_parser(line, workspace)
-  local pattern = "[a-zA-z0-9%_%-%.%/]+%.py:%d+:"
+  local pattern = "[a-zA-z0-9%_%-%.%/]+%.py:%d+:.?"
   -- print("line: " .. line)
   local sloc, eloc = string.find(line, pattern)
   -- print("sloc "..sloc.." eloc "..eloc)
   if sloc and eloc then
-    local sloc2, eloc2 = string.find(line, "py:%d+: ")
-    local number = tonumber(string.sub(line, sloc2+3, eloc2-2))
+    local sloc2, eloc2 = string.find(line, "py:%d+:")
+    local found = string.sub(line, sloc2, eloc2)
+    -- print("found: " .. found)
+    -- print("sloc2 "..sloc2.." eloc2 "..eloc2)
+    -- print("number: " .. string.sub(line, sloc2+3, eloc2-1))
+    local number = tonumber(string.sub(line, sloc2+3, eloc2-1))
     local filename = string.sub(line, sloc, sloc2+1)
     -- print("first part: " .. string.sub(filename, 0, 1))
     if string.sub(filename, 0, 1) ~= '/' then
@@ -202,7 +216,10 @@ M.run = function ()
         vim.cmd(vim.api.nvim_replace_termcodes('normal <C-l>', true, true, true))
         vim.cmd(vim.api.nvim_replace_termcodes('normal zz', true, true, true))
         vim.lsp.util.jump_to_location({uri=location, range=range }, "utf-8")
-      end, 200)
+        vim.defer_fn(function()
+          vim.lsp.util.jump_to_location({uri=location, range=range }, "utf-8")
+        end, 300)
+      end, 300)
     else
       print("File not found in workspace")
     end
@@ -223,9 +240,9 @@ function test()
     else
       print("failure")
       if result then
-        print(value["file"])
+        print('expected ' .. value["file"])
         print(result["file"])
-        print(value["file_line_number"])
+        print('expected ' .. value["file_line_number"])
         print(result["file_line_number"])
       end
     end
