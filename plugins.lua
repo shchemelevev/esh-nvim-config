@@ -90,7 +90,11 @@ local plugins = {
   {"RRethy/vim-illuminate", lazy=false},
   {
     "ThePrimeagen/harpoon",
-    lazy=false,
+    cmd = "AerialOpen",
+    lazy = true,
+    kays = {
+      { "<leader>a", "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>" }
+    },
     setup = function()
       require("harpoon").setup({
         tabline = true,
@@ -102,8 +106,23 @@ local plugins = {
     end
   },
   {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      -- { "s", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
+      -- { "S", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
+      -- { "R", mode = { "o", "x" }, function() require("flash").treesitter_search() end, desc = "Treesitter Search" },
+    },
+  },
+  {
     'RishabhRD/lspactions',
-    lazy=false,
+    lazy=true,
+    keys={
+      {"<leader>lr", "<cmd> lua require'lspactions'.rename()<CR>"}
+    },
     dependencies = {
       'nvim-lua/popup.nvim',
       'nvim-lua/plenary.nvim'
@@ -116,39 +135,14 @@ local plugins = {
       {'MunifTanjim/nui.nvim'}
     }
   },
-  -- {
-  --   'rmagatti/auto-session',
-  --   lazy = false,
-  --   init = function()
-  --     vim.api.nvim_create_autocmd({ 'BufEnter' }, {
-  --       pattern = 'NvimTree*',
-  --       callback = function()
-  --         local api = require('nvim-tree.api')
-  --         local view = require('nvim-tree.view')
-  --
-  --         if not view.is_visible() then
-  --           api.tree.open()
-  --         end
-  --       end,
-  --     })
-  --     vim.t.bufs = vim.api.nvim_list_bufs()
-  --   end,
-  --   config = function()
-  --     require("auto-session").setup {
-  --       log_level = "error",
-  --       auto_session_suppress_dirs = { "~/", "~/Projects", "~/Downloads", "/"},
-  --       post_restore_cmds = {restore_tabs},
-  --       pre_save_cmds = {close_neotree},
-  --     }
-  --   end
-  -- },
   {
     "tpope/vim-fugitive",
-    lazy = false
+    lazy=true,
+    cmd = "Git"
   },
   {
     "sindrets/diffview.nvim",
-    -- lazy = false,
+    lazy = true,
     cmd="DiffviewOpen",
     config = function ()
       local a = require "custom.configs.diffview"
@@ -156,16 +150,16 @@ local plugins = {
     end
   },
   {'nvim-lua/popup.nvim'},
-  {
-    "smjonas/inc-rename.nvim",
-    lazy=false,
-    config = function()
-      require("inc_rename").setup()
-    end,
-  },
-  {'RishabhRD/lspactions'},
+  -- {
+  --   "smjonas/inc-rename.nvim",
+  --   lazy=false,
+  --   config = function()
+  --     require("inc_rename").setup()
+  --   end,
+  -- },
   {
     "folke/lsp-colors.nvim",
+    ft="python",
     config = function()
       require("lsp-colors").setup({
         Error = "#db4b4b",
@@ -209,6 +203,19 @@ local plugins = {
       "nvim-neotest/neotest-plenary",
       "nvim-neotest/neotest-vim-test",
     },
+    keys = {
+      {"<leader>ta",  "<cmd>lua require('neotest').run.attach()<cr>"},
+      {"<leader>tf",  "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>"},
+      {"<leader>tF",  "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>"},
+      {"<leader>tl",  "<cmd>lua require('neotest').run.run_last()<cr>"},
+      {"<leader>tL",  "<cmd>lua require('neotest').run.run_last({ strategy = 'dap' })<cr>"},
+      {"<leader>tn",  "<cmd>lua require('neotest').run.run()<cr>"},
+      {"<leader>tN",  "<cmd>lua require('neotest').run.run({strategy = 'dap'})<cr>"},
+      {"<leader>to",  "<cmd>lua require('neotest').output.open({ enter = true })<cr>"},
+      {"<leader>tS",  "<cmd>lua require('neotest').run.stop()<cr>"},
+      {"<leader>ts",  "<cmd>lua require('neotest').summary.toggle()<cr>"}
+    },
+    lazy=true,
     config = function()
       require "custom.configs.neotest"
     end
@@ -335,23 +342,28 @@ local plugins = {
       )
     end
   },
-  {
-      "kwkarlwang/bufjump.nvim",
-      lazy=false,
-      init = function()
-          require("bufjump").setup()
-      end
-  },
-  {"ThePrimeagen/vim-be-good", lazy=false},
-  {
-      "cbochs/grapple.nvim",
-      lazy = false,
-      dependencies = { "nvim-lua/plenary.nvim" },
-  },
+  -- {
+  --     "kwkarlwang/bufjump.nvim",
+  --     lazy=false,
+  --     init = function()
+  --         require("bufjump").setup()
+  --     end
+  -- },
+  -- {"ThePrimeagen/vim-be-good", lazy=false},
+  -- {
+  --     "cbochs/grapple.nvim",
+  --     lazy = false,
+  --     dependencies = { "nvim-lua/plenary.nvim" },
+  -- },
   {
       "cbochs/portal.nvim",
       -- Optional dependencies
-      lazy = false,
+      lazy = true,
+      keys = {
+        {"<leader>o", "<cmd>Portal jumplist backward<cr>"},
+        {"<leader>i", "<cmd>Portal jumplist forward<cr>"}
+      },
+      cmd = "Portal",
       dependencies = {
           "cbochs/grapple.nvim",
           "ThePrimeagen/harpoon"
@@ -382,7 +394,7 @@ local plugins = {
   },
   {
     "jose-elias-alvarez/null-ls.nvim",
-    lazy = false,
+    lazy = true,
     ft = {"python"},
     opts = function()
       return require "custom.configs.null-ls"
@@ -401,7 +413,7 @@ local plugins = {
       },
     },
   },
-  {'kevinhwang91/nvim-bqf', ft = 'qf'},
+  {'kevinhwang91/nvim-bqf', ft = 'qf', event="VeryLazy"},
   {
       "kylechui/nvim-surround",
       version = "*", -- Use for stability; omit to use `main` branch for the latest features
@@ -424,10 +436,10 @@ local plugins = {
   --   lazy=false,
   --   config = function ()
   --     -- Change '<C-g>' here to any keycode you like.
-  --     vim.keymap.set('i', '<C-g>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-  --     vim.keymap.set('i', '<C-m>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true })
-  --     vim.keymap.set('i', '<C-,>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true })
-  --     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true })
+  --     vim.keymap.set('i', '<C-g>', function () return vim.fn'codeium#Accept'() end, { expr = true })
+  --     vim.keymap.set('i', '<C-m>', function() return vim.fn'codeium#CycleCompletions'(1) end, { expr = true })
+  --     vim.keymap.set('i', '<C-,>', function() return vim.fn'codeium#CycleCompletions'(-1) end, { expr = true })
+  --     vim.keymap.set('i', '<c-x>', function() return vim.fn'codeium#Clear'() end, { expr = true })
   --   end
   -- },
   -- {
@@ -446,7 +458,8 @@ local plugins = {
   -- },
   {
     'smoka7/hop.nvim',
-    lazy=false,
+    lazy=true,
+    event="VeryLazy",
     init=function()
       require'hop'.setup({create_hl_autocmd=false})
       vim.api.nvim_command('highlight default HopNextKey  guifg=#F7954F gui=bold ctermfg=198 cterm=bold')
@@ -467,25 +480,28 @@ local plugins = {
     lazy = true,
     -- optional for floating window border decoration
     keys = {
-      { "<leager>lg", "<cmd> LazyGit<CR>"}
+      { "<leager>lg", "<cmd>LazyGit<CR>"}
     },
     cmd = "LazyGit",
     dependencies = {
         "nvim-lua/plenary.nvim",
     },
   },
-  {'nfvs/vim-perforce', lazy=false},
+  {
+    'nfvs/vim-perforce', lazy=true,
+    cmd = {"P4edit", "P4info"}
+  },
   {
     -- config location {project_root}/.nvim/rsync.toml
       'OscarCreator/rsync.nvim',
       build = 'make',
-      lazy = false,
+      lazy = true,
       requires = {'nvim-lua/plenary.nvim'},
+      cmd = {"RsyncUp", "RsyncUpFile"},
       init = function()
           require("rsync").setup()
       end
   },
-  { "averms/black-nvim", lazy=false, ft = "python"},
   {'f-person/git-blame.nvim', lazy=false,
     init=function ()
       vim.g.gitblame_enabled = 1
@@ -504,6 +520,14 @@ local plugins = {
       "MunifTanjim/nui.nvim",
       "nvim-lua/plenary.nvim"
     },
+    lazy=true,
+    keys = {
+      {"<leader>gls",  "<cmd>lua require('gitlab').summary()<cr>"},
+      {"<leader>glA",  "<cmd>lua require('gitlab').approve()<cr>"},
+      {"<leader>glR",  "<cmd>lua require('gitlab').revoke()<cr>"},
+      {"<leader>glc",  "<cmd>lua require('gitlab').create_comment()<cr>"},
+      {"<leader>gld",  "<cmd>lua require('gitlab').list_discussions()<cr>"}
+    },
     build = function () require("gitlab").build() end, -- Builds the Go binary
     config = function()
       require("gitlab").setup()
@@ -515,8 +539,8 @@ local plugins = {
   },
   {
     "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
     opts = {},
+    lazy=true,
     ft = "python",
     config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
@@ -529,14 +553,18 @@ local plugins = {
   {
       "norseghost/nvimwordlist",
       run = "NvimWordlistUpdate",
-      lazy=false,
+      event = "VeryLazy",
       config = function()
           vim.opt.spelllang:append("vim")
       end
   },
   {
     "nvim-pack/nvim-spectre",
-    lazy = false,
+    lazy = true,
+    keys = {
+      {'<leader>S', '<cmd>lua require("spectre").toggle()<CR>'},
+      {'<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>'}
+    },
     init = function()
         require('spectre').setup()
     end
