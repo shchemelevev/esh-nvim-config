@@ -568,6 +568,7 @@ local plugins = {
     init = function()
         require('spectre').setup()
     end
-  }
+  },
+  { "tenxsoydev/karen-yank.nvim", config = true, lazy=false },
 }
 return plugins
