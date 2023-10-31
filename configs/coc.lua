@@ -1,7 +1,8 @@
 local M = {
   "neoclide/coc.nvim",
   branch = "master",
-  lazy= false,
+  lazy= true,
+  event="InsertEnter",
   build = "yarn install --frozen-lockfile",
 }
 

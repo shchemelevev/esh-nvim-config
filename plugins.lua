@@ -607,5 +607,14 @@ local plugins = {
       })
     end,
   },
+  {
+    "nvim-tree/nvim-tree.lua",
+    opts = function()
+      local conf = require "plugins.configs.nvimtree"
+      conf.view.side = "right"
+      conf.view.width = 50
+      return conf
+    end,
+  }
 }
 return plugins
