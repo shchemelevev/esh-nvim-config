@@ -90,10 +90,11 @@ local plugins = {
   {"RRethy/vim-illuminate", lazy=false},
   {
     "ThePrimeagen/harpoon",
-    cmd = "AerialOpen",
     lazy = true,
-    kays = {
-      { "<leader>a", "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>" }
+    keys = {
+      {"<leader>sj", "<cmd>Portal jumplist backward<cr>"},
+      {"<leader>su", "<cmd>Portal jumplist forward<cr>"},
+      {"<leader>sm", "<cmd>Portal jumplist forward<cr>"}
     },
     setup = function()
       require("harpoon").setup({
@@ -275,7 +276,7 @@ local plugins = {
   -- },
   {
     "ibhagwan/fzf-lua",
-    lazy = false,
+    lazy = true,
     branch= "main",
     dependencies = {
       'nvim-tree/nvim-web-devicons'
@@ -284,7 +285,7 @@ local plugins = {
   {
     "Pocco81/auto-save.nvim",
     event="InsertEnter",
-    lazy = false
+    lazy = true
   },
   -- {
   --   "harrisoncramer/gitlab.nvim",
@@ -304,7 +305,11 @@ local plugins = {
   -- },
   {
     'stevearc/aerial.nvim',
-    init = function()
+    cmd = "AerialToggle",
+    keys = {
+      { "<leader>a", "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>" }
+    },
+    config = function()
       require('aerial').setup({
         -- optionally use on_attach to set keymaps when aerial has attached to a buffer
         on_attach = function(bufnr)
@@ -325,7 +330,8 @@ local plugins = {
   {
     'm-demare/hlargs.nvim',
     ft = "python",
-    init = function()
+    lazy=true,
+    config = function()
       require('hlargs').setup(
         {
           color = "#6c71c4",
@@ -460,7 +466,7 @@ local plugins = {
     'smoka7/hop.nvim',
     lazy=true,
     event="VeryLazy",
-    init=function()
+    config=function()
       require'hop'.setup({create_hl_autocmd=false})
       vim.api.nvim_command('highlight default HopNextKey  guifg=#F7954F gui=bold ctermfg=198 cterm=bold')
       vim.api.nvim_command('highlight default HopNextKey1 guifg=#89bfdc gui=bold ctermfg=45 cterm=bold')
@@ -488,7 +494,8 @@ local plugins = {
     },
   },
   {
-    'nfvs/vim-perforce', lazy=true,
+    'nfvs/vim-perforce',
+    lazy=true,
     cmd = {"P4edit", "P4info"}
   },
   {
@@ -498,12 +505,12 @@ local plugins = {
       lazy = true,
       requires = {'nvim-lua/plenary.nvim'},
       cmd = {"RsyncUp", "RsyncUpFile"},
-      init = function()
+      config = function()
           require("rsync").setup()
       end
   },
   {'f-person/git-blame.nvim', lazy=false,
-    init=function ()
+    config=function ()
       vim.g.gitblame_enabled = 1
       vim.g.gitblame_message_template = '<author> • <summary>'
       vim.g.gitblame_virtual_text_column = 80
@@ -552,8 +559,8 @@ local plugins = {
   },
   {
       "norseghost/nvimwordlist",
-      run = "NvimWordlistUpdate",
-      event = "VeryLazy",
+      cmd = "NvimWordlistUpdate",
+      lazy = true,
       config = function()
           vim.opt.spelllang:append("vim")
       end
@@ -565,10 +572,40 @@ local plugins = {
       {'<leader>S', '<cmd>lua require("spectre").toggle()<CR>'},
       {'<leader>sw', '<cmd>lua require("spectre").open_visual({select_word=true})<CR>'}
     },
-    init = function()
+    config = function()
         require('spectre').setup()
     end
   },
   { "tenxsoydev/karen-yank.nvim", config = true, lazy=false },
+  {
+    "andythigpen/nvim-coverage",
+    cmd = {"Coverage", "CoverageToggle"},
+    lazy=true,
+    requires = "nvim-lua/plenary.nvim",
+    -- Optional: needed for PHP when using the cobertura parser
+    -- rocks = { 'lua-xmlreader' },
+    config = function()
+      require("coverage").setup({
+           highlights = {
+               covered = { fg = "#859900" },
+               uncovered = { fg = "#dc322f" },
+               partial = { fg = "#AA71F0" },
+           },
+          signs = {
+              covered = { hl = "CoverageCovered", text = "▎▎" },
+              uncovered = { hl = "CoverageUncovered", text = "▎▎" },
+              partial = { hl = "CoveragePartial", text = "▎▎" },
+          },
+          lang={
+            python = {
+                coverage_file = ".coverage",
+                -- coverage_command = "source /Users/e_shchemelev/develop/accord/py-accord-handlers/.tox/py310/bin/activate && pytest .",
+                coverage_command = "/Users/e_shchemelev/.virtualenvs/neovim3/bin/coverage json --fail-under=0 -q -o -",
+                only_open_buffers = false,
+            },
+          }
+      })
+    end,
+  },
 }
 return plugins

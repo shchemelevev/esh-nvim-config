@@ -1,3 +1,4 @@
+vim.g.loaded_python3_provider = 1
 vim.g.python3_host_prog = "/Users/e_shchemelev/.virtualenvs/neovim3/bin/python"
 vim.g.python_host_prog = "/Users/e_shchemelev/.virtualenvs/neovim2/bin/python"
 vim.cmd("set title")
@@ -39,3 +40,9 @@ autocmd('TermOpen', {
   pattern = '',
   command = ":setlocal nospell"
 })
+
+local enable_providers = { "python3_provider", }
+for _, plugin in pairs(enable_providers) do
+  vim.g["loaded_" .. plugin] = nil
+  vim.cmd("runtime " .. plugin)
+end

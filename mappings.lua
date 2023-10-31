@@ -44,6 +44,7 @@ M.abc = {
     -- neotest
     ["<leader>X"] = { "<cmd>:q<cr>", "Attach" },
     ["<leader>ta"] = { "<cmd>lua require('neotest').run.attach()<cr>", "Attach" },
+    ["<leader>tc"] = { "<cmd>Coverage<cr>", "Coverage" },
     ["<leader>tf"] = { "<cmd>lua require('neotest').run.run(vim.fn.expand('%'))<cr>", "Run File" },
     ["<leader>tF"] = { "<cmd>lua require('neotest').run.run({vim.fn.expand('%'), strategy = 'dap'})<cr>", "Debug File" },
     ["<leader>tl"] = { "<cmd>lua require('neotest').run.run_last()<cr>", "Run Last" },
