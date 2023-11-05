@@ -13,7 +13,8 @@ local M = {}
 M.abc = {
   n = {
      -- ["<C-n>"] = {"<cmd> Telescope <CR>", "Telescope"},
-     -- ["<C-s>"] = {":Telescope Files <CR>", "Telescope Files"},
+     ["<leader>fm"] = {":Telescope Marks <CR>", "Telescope Marks"},
+     ["<leader>fw"] = {":Telescope grep_string <CR>", "Telescope grep string"},
      ["<C-u>"] = {"<C-u>zz", "up"},
      ["<C-d>"] = {"<C-d>zz", "down"},
      ["su"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 1) <CR>', "harpoon term 1 cmd 1" },
@@ -62,6 +63,8 @@ M.abc = {
     ["<leader>ss"] = { "<cmd>SessionManager save_current_session<cr>", "Save Current Session" },
     ["<leader>pm"] = { "<cmd>ProjectMgr<cr>", "ProjectMGR" },
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
+    ["<leader>rw"] = { ":%s/\\<<C-r><C-w>\\>/", "replace word under cursor" },
+
     ["<C-l>"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
 
     ["<leader>o"] = { "<cmd>Portal jumplist backward<cr>", "Summary" },

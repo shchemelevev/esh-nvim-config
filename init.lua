@@ -41,6 +41,16 @@ autocmd('TermOpen', {
   command = ":setlocal nospell"
 })
 
+autocmd('FileType', {
+  pattern = 'spectre_panel',
+  command = ":setlocal nospell"
+})
+
+-- vim.o.foldcolumn = '1' -- '0' is not bad
+-- vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+-- vim.o.foldlevelstart = 99
+-- vim.o.foldenable = true
+
 local enable_providers = { "python3_provider", }
 for _, plugin in pairs(enable_providers) do
   vim.g["loaded_" .. plugin] = nil
