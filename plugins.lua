@@ -99,7 +99,7 @@ local plugins = {
     setup = function()
       require("harpoon").setup({
         tabline = true,
-        enter_on_sendcmd = true,
+        -- enter_on_sendcmd = true,
         menu = {
             width = 120
         }
@@ -256,7 +256,7 @@ local plugins = {
       local config = require('session_manager.config')
       require('session_manager').setup({
         sessions_dir = Path:new(vim.fn.stdpath('data'), 'sessions'), -- The directory where the session files will be saved.
-        autoload_mode = config.AutoloadMode.CurrentDir, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
+        autoload_mode = config.AutoloadMode.LastSession, -- Define what to do when Neovim is started without arguments. Possible values: Disabled, CurrentDir, LastSession
         autosave_last_session = true, -- Automatically save last session on exit and on session switch.
         autosave_ignore_not_normal = true, -- Plugin will not save a session when no buffers are opened, or all of them aren't writable or listed.
         -- autosave_ignore_dirs = {}, -- A list of directories where the session will not be autosaved.
@@ -306,6 +306,7 @@ local plugins = {
   {
     'stevearc/aerial.nvim',
     cmd = "AerialToggle",
+    ft = "python",
     keys = {
       { "<leader>a", "<cmd> AerialToggle <CR>NvimTreeRefresh<CR>" }
     },
@@ -317,7 +318,8 @@ local plugins = {
           vim.keymap.set('n', '{', '<cmd>AerialPrev<CR>', {buffer = bufnr})
           vim.keymap.set('n', '}', '<cmd>AerialNext<CR>', {buffer = bufnr})
           vim.cmd("NvimTreeClose")
-        end
+        end,
+        post_jump_cmd = "normal! zt",
       })
     end,
     opts = {},
@@ -576,7 +578,7 @@ local plugins = {
         require('spectre').setup()
     end
   },
-  { "tenxsoydev/karen-yank.nvim", config = true, lazy=false },
+  -- { "tenxsoydev/karen-yank.nvim", config = true, lazy=false },
   {
     "andythigpen/nvim-coverage",
     cmd = {"Coverage", "CoverageToggle"},
@@ -625,47 +627,48 @@ local plugins = {
       -- refer to the configuration section below
     }
   },
-  {
-    'chentoast/marks.nvim',
-    ft='python',
-    setup = function ()
-      require'marks'.setup {
-        -- whether to map keybinds or not. default true
-        default_mappings = true,
-        signs = true,
-        -- which builtin marks to show. default {}
-        builtin_marks = { ".", "<", ">", "^" },
-        -- whether movements cycle back to the beginning/end of buffer. default true
-        cyclic = true,
-        -- whether the shada file is updated after modifying uppercase marks. default false
-        force_write_shada = true,
-        -- how often (in ms) to redraw signs/recompute mark positions. 
-        -- higher values will have better performance but may cause visual lag, 
-        -- while lower values may cause performance penalties. default 150.
-        refresh_interval = 250,
-        -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
-        -- marks, and bookmarks.
-        -- can be either a table with all/none of the keys, or a single number, in which case
-        -- the priority applies to all marks.
-        -- default 10.
-        sign_priority = { lower=10, upper=15, builtin=8, bookmark=20 },
-        -- disables mark tracking for specific filetypes. default {}
-        excluded_filetypes = {},
-        -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
-        -- sign/virttext. Bookmarks can be used to group together positions and quickly move
-        -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
-        -- default virt_text is "".
-        bookmark_0 = {
-          sign = "⚑",
-          virt_text = "hello world",
-          -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
-          -- defaults to false.
-          annotate = false,
-        },
-        mappings = {}
-      }
-    end
-  },
+  -- {
+  --   'chentoast/marks.nvim',
+  --   ft='python',
+  --   lazy=false,
+  --   setup = function ()
+  --     require'marks'.setup {
+  --       -- whether to map keybinds or not. default true
+  --       default_mappings = true,
+  --       signs = true,
+  --       -- which builtin marks to show. default {}
+  --       builtin_marks = { ".", "<", ">", "^" },
+  --       -- whether movements cycle back to the beginning/end of buffer. default true
+  --       cyclic = true,
+  --       -- whether the shada file is updated after modifying uppercase marks. default false
+  --       force_write_shada = true,
+  --       -- how often (in ms) to redraw signs/recompute mark positions. 
+  --       -- higher values will have better performance but may cause visual lag, 
+  --       -- while lower values may cause performance penalties. default 150.
+  --       refresh_interval = 250,
+  --       -- sign priorities for each type of mark - builtin marks, uppercase marks, lowercase
+  --       -- marks, and bookmarks.
+  --       -- can be either a table with all/none of the keys, or a single number, in which case
+  --       -- the priority applies to all marks.
+  --       -- default 10.
+  --       sign_priority = { lower=1, upper=15, builtin=8, bookmark=20 },
+  --       -- disables mark tracking for specific filetypes. default {}
+  --       excluded_filetypes = {},
+  --       -- marks.nvim allows you to configure up to 10 bookmark groups, each with its own
+  --       -- sign/virttext. Bookmarks can be used to group together positions and quickly move
+  --       -- across multiple buffers. default sign is '!@#$%^&*()' (from 0 to 9), and
+  --       -- default virt_text is "".
+  --       bookmark_0 = {
+  --         sign = "⚑",
+  --         virt_text = "hello world",
+  --         -- explicitly prompt for a virtual line annotation when setting a bookmark from this group.
+  --         -- defaults to false.
+  --         annotate = false,
+  --       },
+  --       mappings = {}
+  --     }
+  --   end
+  -- },
   -- {
   --     'BartSte/nvim-project-marks',
   --     lazy = false,

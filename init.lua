@@ -46,6 +46,24 @@ autocmd('FileType', {
   command = ":setlocal nospell"
 })
 
+autocmd('BufEnter', {
+  pattern = '*.keymap',
+  callback = function ()
+    vim.cmd(":set nowrap")
+    vim.cmd(":set nospell")
+  end,
+})
+
+autocmd('FileType', {
+  pattern = 'quickfix',
+  callback = function ()
+    local bufnr = vim.fn.bufnr()
+    print(bufnr)
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<esc>', '<cmd>cclose<CR>', {noremap=true})
+  end
+})
+
+
 -- vim.o.foldcolumn = '1' -- '0' is not bad
 -- vim.o.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
 -- vim.o.foldlevelstart = 99
