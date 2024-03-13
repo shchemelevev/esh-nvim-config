@@ -25,6 +25,7 @@ local function my_on_attach(bufnr)
     return { desc = "nvim-tree: " .. desc, buffer = bufnr, noremap = true, silent = true, nowait = true }
   end
 
+  vim.keymap.set('n', 's', "<nop>", {})
   -- default mappings
   api.config.mappings.default_on_attach(bufnr)
 
@@ -34,11 +35,13 @@ local function my_on_attach(bufnr)
   -- for some reason it doesn't work properly
   vim.keymap.set("n", "k", hop.hint_word({direction=directions.BEFORE_CURSOR}))
   vim.keymap.set("n", "j", hop.hint_word({direction=directions.AFTER_CURSOR}))
+  vim.keymap.set('n', 's', "<nop>", {})
 end
 
 local options = {
   filters = {
-    custom = { "__pycache__", ".mypy_cache", '.idea', '*.git'}
+    dotfiles = true,
+    custom = { "^.*/__pycache__/$", ".*mypy_cache.*", '.*\\.idea', '*.git'}
   },
   update_focused_file = {
     enable = false,

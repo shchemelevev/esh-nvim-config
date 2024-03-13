@@ -16,6 +16,7 @@ M.abc = {
      ["<leader>fm"] = {":Telescope Marks <CR>", "Telescope Marks"},
      ["<leader>fw"] = {":Telescope live_grep <CR>", "Telescope live grep"},
      ["<leader>fW"] = {":Telescope grep_string <CR>", "Telescope grep string under cursor"},
+     ["<leader>fl"] = {":Telescope lsp_references <CR>", "Telescope lsp references"},
      ["<C-u>"] = {"<C-u>zz", "up"},
      ["<C-d>"] = {"<C-d>zz", "down"},
      ["su"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 1) <CR>', "harpoon term 1 cmd 1" },
@@ -23,6 +24,8 @@ M.abc = {
      ["so"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 3) <CR>', "harpoon term 1 cmd 3" },
      ["sp"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 4) <CR>', "harpoon term 1 cmd 4" },
      ["sy"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(1, 5) <CR>', "harpoon term 1 cmd 5" },
+     ["s7"] = { '<cmd> lua vim.g.restart_rebuild_docker(1, 6) <CR>', "harpoon term 1 cmd 6" },
+     ["s8"] = { '<cmd> lua vim.g.run_cmd_in_harpoon_term(2, 7) <CR>', "harpoon term 2 cmd 7" },
      ["s/"] = { '<cmd> lua require("harpoon.cmd-ui").toggle_quick_menu() <CR>', "harpoon file 1" },
      ["sj"] = { '<cmd> lua require("harpoon.ui").nav_file(1) <CR>', "harpoon file 1" },
      ["sk"] = { '<cmd> lua require("harpoon.ui").nav_file(2) <CR>', "harpoon file 2" },
@@ -93,6 +96,8 @@ M.abc = {
     -- spectre
     ['<leader>S'] = {'<cmd>lua require("spectre").toggle()<CR>', "Toggle Spectre" },
     ['<leader>sw'] = {'<cmd>lua require("spectre").open_visual({select_word=true})<CR>', "Search current word"},
+    ['<leader>ll'] = {'<cmd> lua vim.g.lsp_restart_full()<cr>', 'lsp restart'},
+    ['<leader>tt'] = {'<cmd> lua require("trouble").next({skip_groups = true, jump = true})<CR>', "jump to next trouble"}
   },
 
   i = {

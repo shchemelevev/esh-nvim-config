@@ -6,6 +6,24 @@ vim.api.nvim_command('highlight default HopNextKey  guifg=#F7954F gui=bold cterm
 vim.api.nvim_command('highlight default HopNextKey1 guifg=#89bfdc gui=bold ctermfg=45 cterm=bold')
 vim.api.nvim_command('highlight default HopNextKey2 guifg=#2b8db3 ctermfg=33')
 vim.cmd("set winbar=%=\\m\\ %f")
+vim.cmd('match Tag "DEBUG"')
+vim.g.lua_snippets_path = "/Users/e_shchemelev/develop/esh-nvim-config/snippets"
+
+-- scrolling on buffer change fix
+vim.api.nvim_create_autocmd("BufLeave", {
+	callback = function()
+		vim.g.neovide_scroll_animation_length = 0
+		vim.g.neovide_cursor_animation_length = 0
+	end,
+})
+vim.api.nvim_create_autocmd("BufEnter", {
+	callback = function()
+		vim.fn.timer_start(70, function()
+			vim.g.neovide_scroll_animation_length = 0.3
+			vim.g.neovide_cursor_animation_length = 0.08
+		end)
+	end,
+})
 
 vim.g.gitblame_message_template = '<author> • <summary>'
 vim.g.gitblame_enabled = 0

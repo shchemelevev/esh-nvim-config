@@ -9,7 +9,11 @@ local options = {
       ["ui-select"] = {
         require("telescope.themes").get_dropdown {}
       }
-    }
+    },
+    file_ignore_patterns = {
+      "node_modules",
+      "**/.tox/**",
+    },
   }
 }
 

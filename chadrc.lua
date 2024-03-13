@@ -151,8 +151,28 @@ vim.g.move_coursor_down = function (number)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>"..number.."j", true, false, true), "t", false)
 end
 
+vim.g.restart_rebuild_docker = function (term_number, cmd_number)
+    require("harpoon.term").gotoTerminal(term_number)
+    vim.defer_fn(function()
+      require("harpoon.term").sendCommand(term_number, "\3")
+      vim.defer_fn(function()
+        require("harpoon.term").sendCommand(term_number, "\3")
+        require("harpoon.term").sendCommand(term_number, cmd_number)           -- sends command 1 to term 1
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("G", true, false, true), "n", false)
+      end, 200)
+    end, 200)
+end
+
 vim.g.move_coursor_up = function (number)
     vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<ESC>"..number.."k", true, false, true), "t", false)
+end
+
+
+vim.g.lsp_restart_full = function ()
+    vim.cmd("LspRestart")
+      vim.defer_fn(function()
+        vim.cmd("LspStart")
+      end, 200)
 end
 
 M.plugins = "custom.plugins"
