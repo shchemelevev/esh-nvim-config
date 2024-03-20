@@ -69,6 +69,7 @@ M.abc = {
     ["<leader>rw"] = { ":%s/\\<<C-r><C-w>\\>/", "replace word under cursor" },
 
     ["<C-l>"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
+    ["sw"] = { "<cmd>lua vim.g.sel_workspace()<cr>", "Summary" },
 
     ["<leader>o"] = { "<cmd>Portal jumplist backward<cr>", "Summary" },
     ["<leader>i"] = { "<cmd>Portal jumplist forward<cr>", "Summary" },

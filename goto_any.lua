@@ -182,6 +182,20 @@ function file_exists(name)
    if f~=nil then io.close(f) return true else return false end
 end
 
+function get_workspaces(basedir)
+  foo = {}
+  local cmd = 'find "'..basedir..'" \\( -name ".git" -o -name ".tox" -o -name ".mypy_cache" -o -name "htmlcov" -o -name "__pycache__" -o -name "target"  \\) -prune -o -name "pyrightconfig.json" -print '
+   local p = io.popen(cmd)
+
+  
+  print("test get workspaces")
+  -- local p = io.popen('find "'..basedir..'" -type f')
+  for filename in p:lines() do                         --Loop through all files
+    table.insert(foo, filename)
+  end
+  return foo
+end
+
 M.run = function ()
   local line = vim.api.nvim_get_current_line()
   local workspace = vim.fn.getcwd()
@@ -192,13 +206,18 @@ M.run = function ()
   end
 
   local data = parse_str(line, workspace)
+
+  -- for workspace in get_workspaces(vim.fn.getcwd()) do
+  --   local data = parse_str(line, workspace)
+  --   if not data then
+  --     local row = vim.api.nvim_win_get_cursor(0)[1]
+  --     local lines = table.concat(vim.api.nvim_buf_get_lines(0, row-1, row+1, false))
+  --     -- print(lines)
+  --     data = parse_str(lines, workspace)
+  --   end
+  -- end
+
   -- print(data)
-  if not data then
-    local row = vim.api.nvim_win_get_cursor(0)[1]
-    local lines = table.concat(vim.api.nvim_buf_get_lines(0, row-1, row+1, false))
-    -- print(lines)
-    data = parse_str(lines, workspace)
-  end
   if data then
     local range = {
       start= {line=data['file_line_number']-1, character=0},
@@ -221,7 +240,7 @@ M.run = function ()
         end, 300)
       end, 300)
     else
-      print("File not found in workspace")
+      print("File "..data["file"].." not found in workspace")
     end
 
   else
@@ -229,27 +248,89 @@ M.run = function ()
   end
 end
 
+M.select_workspace = function ()
+  local Menu = require("nui.menu")
+  local event = require("nui.utils.autocmd").event
+  
 
-function test()
-  for key, value in pairs(test_examples) do
-    print("test:")
-    local workspace = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/"
-    local result = parse_str(value['buf_line'], workspace)
-    if result and value["file"] == result['file'] and value['file_line_number'] == result['file_line_number'] then
-      print("success")
-    else
-      print("failure")
-      if result then
-        print('expected ' .. value["file"])
-        print(result["file"])
-        print('expected ' .. value["file_line_number"])
-        print(result["file_line_number"])
-      end
-    end
+  wp = get_workspaces(vim.fn.getcwd()) 
+  lines_value = {}
+  local cwd = vim.fn.getcwd()
+  local pcwd = string.gsub(cwd, '-', '--')
+  for i, workspace in ipairs(wp) do
+    local wp_path = string.gsub(workspace, '/pyrightconfig.json', '')
+    wp_path = string.gsub(wp_path, pcwd..'/', '')
+    table.insert(lines_value, Menu.item(wp_path))
   end
+
+  local menu = Menu({
+    position = "50%",
+    size = {
+      width = 100,
+      height = 5,
+    },
+    border = {
+      style = "single",
+      text = {
+        top = "[Choose-an-Element]",
+        top_align = "center",
+      },
+    },
+    win_options = {
+      winhighlight = "Normal:Normal,FloatBorder:Normal",
+    },
+  }, {
+    lines = lines_value,
+    max_width = 20,
+    keymap = {
+      focus_next = { "j", "<Down>", "<Tab>" },
+      focus_prev = { "k", "<Up>", "<S-Tab>" },
+      close = { "<Esc>", "<C-c>" },
+      submit = { "<CR>", "<Space>" },
+    },
+    on_close = function()
+      print("Menu Closed!")
+    end,
+    on_submit = function(item)
+      print("Menu Submitted: ", item.text)
+      vim.g.go_to_any_prefix = item.text
+    end,
+  })
+  
+  -- mount the component
+  menu:mount()
 end
 
--- test()
+function test()
+  local base_path = "/Users/e_shchemelev/develop/generic-meta-server/meta-server"
+  wp = get_workspaces(base_path) 
+  local cwd = string.gsub("/Users/e_shchemelev/develop/generic-meta-server/meta-server/", '-', '--')
+  for i, workspace in ipairs(wp) do
+    local wp_path = string.gsub(workspace, '/pyrightconfig.json', '')
+    print(wp_path)
+
+    local wp3 = string.gsub(wp_path, cwd, '')
+    print(wp3)
+  end
+  -- for key, value in pairs(test_examples) do
+  --   print("test:")
+  --   local workspace = "/Users/e_shchemelev/develop/generic-meta-server/meta-server/accounts/"
+  --   local result = parse_str(value['buf_line'], workspace)
+  --   if result and value["file"] == result['file'] and value['file_line_number'] == result['file_line_number'] then
+  --     print("success")
+  --   else
+  --     print("failure")
+  --     if result then
+  --       print('expected ' .. value["file"])
+  --       print(result["file"])
+  --       print('expected ' .. value["file_line_number"])
+  --       print(result["file_line_number"])
+  --     end
+  --   end
+  -- end
+end
+
+test()
 
 return M
 

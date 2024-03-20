@@ -105,6 +105,11 @@ vim.g.myfunc = function ()
   goto_any.run()
 end
 
+vim.g.sel_workspace = function ()
+  local goto_any = require("custom.goto_any")
+  goto_any.select_workspace()
+end
+
 vim.g.open_panel = function ()
     vim.cmd [[
       hi default NeotestRunning ctermfg=Cyan guifg=#00f1f5
