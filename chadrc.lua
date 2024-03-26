@@ -19,6 +19,7 @@ vim.api.nvim_create_autocmd({ 'User' }, {
   pattern = "SessionLoadPost",
   group = config_group,
   callback = function()
+    require("luasnip.loaders.from_lua").load{path=vim.g.lua_snippets_path}
     require('nvim-tree.api').tree.toggle(false, true)
   end,
 })
@@ -98,7 +99,8 @@ vim.cmd [[
    augroup END
    autocmd VimEnter * :highlight CursorLine guibg=#f0ead9
 ]]
-vim.g.lua_snippets_path = "~/develop/esh-nvim-config/snippets/"
+
+vim.g.lua_snippets_path = "/Users/e_shchemelev/develop/esh-nvim-config/snippets"
 
 vim.g.myfunc = function ()
   local goto_any = require("custom.goto_any")
@@ -108,6 +110,11 @@ end
 vim.g.sel_workspace = function ()
   local goto_any = require("custom.goto_any")
   goto_any.select_workspace()
+end
+
+vim.g.sel_env = function ()
+  local goto_any = require("custom.goto_any")
+  goto_any.select_env()
 end
 
 vim.g.open_panel = function ()

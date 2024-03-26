@@ -400,14 +400,14 @@ local plugins = {
     "mhinz/vim-signify",
     lazy = false,
   },
-  {
-    "jose-elias-alvarez/null-ls.nvim",
-    lazy = true,
-    ft = {"python"},
-    opts = function()
-      return require "custom.configs.null-ls"
-    end,
-  },
+  -- {
+  --   "jose-elias-alvarez/null-ls.nvim",
+  --   lazy = true,
+  --   ft = {"python"},
+  --   opts = function()
+  --     return require "custom.configs.null-ls"
+  --   end,
+  -- },
   -- {"miyakogi/conoline.vim", lazy=false},
   {
     "williamboman/mason.nvim",
@@ -627,6 +627,12 @@ local plugins = {
       -- refer to the configuration section below
     }
   },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    after = "nvim-treesitter",
+    requires = "nvim-treesitter/nvim-treesitter",
+    lazy=false,
+  }
   -- {
   --   'chentoast/marks.nvim',
   --   ft='python',

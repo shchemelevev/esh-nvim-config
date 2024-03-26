@@ -247,3 +247,9 @@ namespaces
 create_stream
 localhost
 parametrize
+workspace
+filename
+filename
+prev
+vindent
+jumplist

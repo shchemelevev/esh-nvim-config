@@ -70,6 +70,7 @@ M.abc = {
 
     ["<C-l>"] = { "<cmd>lua vim.g.myfunc()<cr>", "Summary" },
     ["sw"] = { "<cmd>lua vim.g.sel_workspace()<cr>", "Summary" },
+    ["se"] = { "<cmd>lua vim.g.sel_env()<cr>", "Summary" },
 
     ["<leader>o"] = { "<cmd>Portal jumplist backward<cr>", "Summary" },
     ["<leader>i"] = { "<cmd>Portal jumplist forward<cr>", "Summary" },
@@ -115,7 +116,8 @@ M.abc = {
     -- ["<C-u>"] = { "<cmd>lua vim.g.move_coursor_up(20)<cr>", "Move cursor up" },
     ["<leader>tx"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
     ["<leader>x"] = { "<cmd>lua vim.g.close_panel()<cr>", "Pannel" },
-    ["<C-\\>"] = {'<cmd>lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true), "n", false)<cr>', "exit from terminal insert mode"}
+    ["<C-\\>"] = {'<cmd>lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>", true, false, true), "n", false)<cr>', "exit from terminal insert mode"},
+    ["<C-v>"] = {'<cmd>lua vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes("<C-\\><C-N>pi ", true, false, true), "n", false)<cr>', "exit from terminal insert mode"}
   }
 }
 

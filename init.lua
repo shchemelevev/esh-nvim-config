@@ -9,6 +9,7 @@ vim.cmd("set winbar=%=\\m\\ %f")
 vim.cmd('match Tag "DEBUG"')
 vim.g.lua_snippets_path = "/Users/e_shchemelev/develop/esh-nvim-config/snippets"
 
+
 -- scrolling on buffer change fix
 vim.api.nvim_create_autocmd("BufLeave", {
 	callback = function()
@@ -16,6 +17,30 @@ vim.api.nvim_create_autocmd("BufLeave", {
 		vim.g.neovide_cursor_animation_length = 0
 	end,
 })
+
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = 'python',
+	callback = function()
+    if not vim.g.snips_loaded then
+      require("luasnip.loaders.from_lua").load { paths = vim.g.lua_snippets_path or "" }
+    end
+    vim.g.snips_loaded = true
+	end
+})
+
+-- vim.api.nvim_create_autocmd('FileType', {
+-- 	desc = 'force load snippets',
+-- 	pattern = 'python',
+-- 	group = vim.api.nvim_create_augroup('black_on_save', { clear = true }),
+-- 	callback = function (opts)
+-- 		vim.api.nvim_create_autocmd('BufWritePre', {
+-- 			buffer = opts.buf,
+-- 			command = 'Black'
+-- 		})
+-- 	end,
+-- })
+
 vim.api.nvim_create_autocmd("BufEnter", {
 	callback = function()
 		vim.fn.timer_start(70, function()
